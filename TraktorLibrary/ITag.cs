@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace TraktorLibrary
 {
-    public class Class1
+    public interface ITag
     {
+        string Artist { get; }
+        string Title { get; }
     }
 }
