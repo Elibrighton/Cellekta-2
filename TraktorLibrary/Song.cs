@@ -53,14 +53,13 @@ namespace TraktorLibrary
         public string Title { get { return _title; } set { _title = value; } }
         public string Playlist { get { return _playlist; } set { _playlist = value; } }
         public string FullName { get { return _fullName; } set { _fullName = value; } }
-        //public int PlayTime { get { return _playTime; } }
-        //public int LeadingBpm { get { return _leadingBpm; } }
-        //public int TrailingBpm { get { return _trailingBpm; } }
-        //public string Key { get { return _key; } }
+        public int LeadingBpm { get { return _leadingBpm; } set { _leadingBpm = value; } }
+        public string Key { get { return _key; } set { _key = value; } }
+        public int PlayTime { get { return _playTime; } set { _playTime = value; } }
+        public int TrailingBpm { get { return _trailingBpm; } set { _trailingBpm = value; } }
 
-        public Song(List<string> ratedArtists)
+        public Song()
         {
-            _ratedArtists = ratedArtists;
         }
 
         public void Populate(XmlNode xmlNode)
@@ -124,7 +123,7 @@ namespace TraktorLibrary
             return directories[directoriesCount - 1];
         }
 
-        private static int GetLeadingBpm(string tagTitle)
+        public static int GetLeadingBpm(string tagTitle)
         {
             var leadingBpm = 0;
 
@@ -142,7 +141,7 @@ namespace TraktorLibrary
             return leadingBpm;
         }
 
-        private static int GetTrailingBpm(string tagArtist)
+        public static int GetTrailingBpm(string tagArtist)
         {
             var trailingBpm = 0;
 
@@ -223,6 +222,73 @@ namespace TraktorLibrary
         private bool IsArtistRated()
         {
             return _ratedArtists.Contains(_artist);
+        }
+
+        public static List<int> GetBpmRange(int bpm)
+        {
+            var bpmRange = new List<int>();
+            // turn 3 into a bpm range variable that can be set to 6 or 9 etc
+            var upperBPM = bpm + 3;
+            var lowerBPM = bpm - 3;
+            var upperDoubleBPM = upperBPM * 2;
+            var lowerDoubleBPM = lowerBPM * 2;
+            var upperHalfBPM = upperBPM / 2;
+            var lowerHalfBPM = lowerBPM / 2;
+
+            for (int i = lowerBPM; i <= upperBPM; i++)
+                bpmRange.Add(i);
+
+            for (int i = lowerDoubleBPM; i <= upperDoubleBPM; i++)
+                bpmRange.Add(i);
+
+            for (int i = lowerHalfBPM; i <= upperHalfBPM; i++)
+                bpmRange.Add(i);
+
+            return bpmRange;
+        }
+
+        public static List<string> GetKeyRange(string key)
+        {
+            var keyRange = new List<string>();
+
+            if (key != string.Empty)
+            {
+                key = key.ToLower();
+                // write a method to valide the key string
+                var keyLetter = key.Contains("d") ? "d" : "m";
+
+                var keyNumber = Convert.ToInt32(key.Replace("d", "").Replace("m", ""));
+
+                var upperKeyNumber = keyNumber == 12 ? 1 : keyNumber + 1;
+                var lowerKeyNumber = keyNumber == 1 ? 12 : keyNumber - 1;
+
+                var upperKey = String.Concat(upperKeyNumber, keyLetter);
+                var lowerKey = String.Concat(lowerKeyNumber, keyLetter);
+
+                var otherKey = String.Concat(keyNumber, keyLetter == "d" ? "m" : "d");
+
+                keyRange.Add(upperKey);
+                keyRange.Add(key);
+                keyRange.Add(lowerKey);
+                keyRange.Add(otherKey);
+            }
+
+            return keyRange;
+        }
+
+        public static string GetTagTitle(string fullName)
+        {
+            TagLib.File f = TagLib.File.Create(fullName);
+
+            return f.Tag.Title;
+
+        }
+
+        public static string GetTagArtist(string fullName)
+        {
+            TagLib.File f = TagLib.File.Create(fullName);
+
+            return f.Tag.FirstArtist;
         }
     }
 }

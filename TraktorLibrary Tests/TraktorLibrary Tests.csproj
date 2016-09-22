@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6CB0ED72-D488-4FFE-9431-4905CCE2FB5E}</ProjectGuid>
+    <ProjectGuid>{8365E889-A597-45AA-8FDC-AA79E96759B1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cellekta_2_Tests</RootNamespace>
-    <AssemblyName>Cellekta 2 Tests</AssemblyName>
+    <RootNamespace>TraktorLibrary_Tests</RootNamespace>
+    <AssemblyName>TraktorLibrary Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -50,16 +51,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CellektaTests.cs" />
+    <Compile Include="TraktorLibraryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cellekta 2\Cellekta 2.csproj">
-      <Project>{1d87f600-d8f3-4e12-97a3-673e0f46c68f}</Project>
-      <Name>Cellekta 2</Name>
+    <ProjectReference Include="..\TraktorLibrary\TraktorLibrary.csproj">
+      <Project>{d7056e78-85d3-4c73-8a41-0e990fba3745}</Project>
+      <Name>TraktorLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

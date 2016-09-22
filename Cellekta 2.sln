@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cellekta 2 Tests", "Cellekt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraktorLibrary", "TraktorLibrary\TraktorLibrary.csproj", "{D7056E78-85D3-4C73-8A41-0E990FBA3745}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraktorLibrary Tests", "TraktorLibrary Tests\TraktorLibrary Tests.csproj", "{8365E889-A597-45AA-8FDC-AA79E96759B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D7056E78-85D3-4C73-8A41-0E990FBA3745}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7056E78-85D3-4C73-8A41-0E990FBA3745}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7056E78-85D3-4C73-8A41-0E990FBA3745}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8365E889-A597-45AA-8FDC-AA79E96759B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8365E889-A597-45AA-8FDC-AA79E96759B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8365E889-A597-45AA-8FDC-AA79E96759B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8365E889-A597-45AA-8FDC-AA79E96759B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

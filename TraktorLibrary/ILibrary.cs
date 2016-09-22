@@ -13,6 +13,11 @@ namespace TraktorLibrary
         bool TraktorExists();
         bool TempExists();
         void Import();
-        List<ISong> GetMusic();
+        List<string> GetPlaylists();
+        List<string> GetKeys();
+        List<string> GetBpms();
+        List<ISong> Music { get; }
+        Dictionary<string, int> GetKeyDictionary();
+        Dictionary<int, int> GetBpmDictionary();
     }
 }
