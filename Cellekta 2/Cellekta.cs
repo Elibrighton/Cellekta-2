@@ -313,7 +313,8 @@ namespace Cellekta_2
 
         private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
-            PopulateSongs();
+            if (searchTextBox.Text.Length == 0 || searchTextBox.Text.Length >= 3)
+                PopulateSongs();
         }
 
         private void bpmComboBox_SelectedIndexChanged(object sender, EventArgs e)
