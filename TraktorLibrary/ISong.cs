@@ -19,5 +19,6 @@ namespace TraktorLibrary
         string Key { get; }
         void Populate(XmlNode xmlNode);
         void GetRating();
+        int Rating { get; set; }
     }
 }

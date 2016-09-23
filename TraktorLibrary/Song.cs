@@ -57,6 +57,7 @@ namespace TraktorLibrary
         public string Key { get { return _key; } set { _key = value; } }
         public int PlayTime { get { return _playTime; } set { _playTime = value; } }
         public int TrailingBpm { get { return _trailingBpm; } set { _trailingBpm = value; } }
+        public int Rating { get { return _rating; } set { _rating = value; } }
 
         public Song()
         {

@@ -139,7 +139,7 @@ namespace Cellekta_2
                 else
                     trannyBpm = song.LeadingBpm.ToString();
 
-                string[] row = new string[] { song.Artist, song.Title, trannyBpm, song.Key, song.Playlist };
+                string[] row = new string[] { song.Rating.ToString(), song.Artist, song.Title, trannyBpm, song.Key, song.Playlist };
 
                 var isAdding = false;
 
@@ -159,29 +159,33 @@ namespace Cellekta_2
 
             }
             // takes too long while debugging
-            songsGridView.Sort(songsGridView.Columns[4], ListSortDirection.Ascending);
+            songsGridView.Sort(songsGridView.Columns[5], ListSortDirection.Ascending);
             songsGridView.Rows[0].Selected = true;
         }
 
         private void AddHeadings()
         {
-            songsGridView.ColumnCount = 5;
-            songsGridView.Columns[0].Name = "Artist";
-            songsGridView.Columns[1].Name = "Title";
-            songsGridView.Columns[2].Name = "BPM";
-            songsGridView.Columns[3].Name = "Key";
-            songsGridView.Columns[4].Name = "Playlist";
+            songsGridView.ColumnCount = 6;
+            songsGridView.Columns[0].Name = "Rating";
+            songsGridView.Columns[1].Name = "Artist";
+            songsGridView.Columns[2].Name = "Title";
+            songsGridView.Columns[3].Name = "BPM";
+            songsGridView.Columns[4].Name = "Key";
+            songsGridView.Columns[5].Name = "Playlist";
 
-            songsGridView.Columns[1].Width = 350;
+            songsGridView.Columns[0].Width = 50;
+            songsGridView.Columns[2].Width = 300;
 
-            listGridView.ColumnCount = 5;
-            listGridView.Columns[0].Name = "Artist";
-            listGridView.Columns[1].Name = "Title";
-            listGridView.Columns[2].Name = "BPM";
-            listGridView.Columns[3].Name = "Key";
-            listGridView.Columns[4].Name = "Playlist";
+            listGridView.ColumnCount = 6;
+            listGridView.Columns[0].Name = "Rating";
+            listGridView.Columns[1].Name = "Artist";
+            listGridView.Columns[2].Name = "Title";
+            listGridView.Columns[3].Name = "BPM";
+            listGridView.Columns[4].Name = "Key";
+            listGridView.Columns[5].Name = "Playlist";
 
-            listGridView.Columns[1].Width = 350;
+            listGridView.Columns[0].Width = 50;
+            listGridView.Columns[2].Width = 300;
         }
 
         private void ClearMusic()
