@@ -62,6 +62,7 @@
             this.electroHouseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.weddingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.presetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.everythingElseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.musicTabControl.SuspendLayout();
             this.listTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.listGridView)).BeginInit();
@@ -354,20 +355,20 @@
             this.afterMenuItem,
             this.allMenuItem});
             this.clearMenuItem.Name = "clearMenuItem";
-            this.clearMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearMenuItem.Size = new System.Drawing.Size(101, 22);
             this.clearMenuItem.Text = "Clear";
             // 
             // afterMenuItem
             // 
             this.afterMenuItem.Name = "afterMenuItem";
-            this.afterMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.afterMenuItem.Size = new System.Drawing.Size(100, 22);
             this.afterMenuItem.Text = "After";
             this.afterMenuItem.Click += new System.EventHandler(this.afterMenuItem_Click);
             // 
             // allMenuItem
             // 
             this.allMenuItem.Name = "allMenuItem";
-            this.allMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.allMenuItem.Size = new System.Drawing.Size(100, 22);
             this.allMenuItem.Text = "All";
             this.allMenuItem.Click += new System.EventHandler(this.allMenuItem_Click);
             // 
@@ -375,7 +376,8 @@
             // 
             this.playlistsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.electroHouseMenuItem,
-            this.weddingMenuItem});
+            this.weddingMenuItem,
+            this.everythingElseMenuItem});
             this.playlistsToolStripMenuItem.Name = "playlistsToolStripMenuItem";
             this.playlistsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.playlistsToolStripMenuItem.Text = "Playlists";
@@ -383,14 +385,14 @@
             // electroHouseMenuItem
             // 
             this.electroHouseMenuItem.Name = "electroHouseMenuItem";
-            this.electroHouseMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.electroHouseMenuItem.Size = new System.Drawing.Size(153, 22);
             this.electroHouseMenuItem.Text = "Electro house";
             this.electroHouseMenuItem.Click += new System.EventHandler(this.electroHouseMenuItem_Click);
             // 
             // weddingMenuItem
             // 
             this.weddingMenuItem.Name = "weddingMenuItem";
-            this.weddingMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.weddingMenuItem.Size = new System.Drawing.Size(153, 22);
             this.weddingMenuItem.Text = "Wedding";
             this.weddingMenuItem.Click += new System.EventHandler(this.weddingMenuItem_Click);
             // 
@@ -399,6 +401,15 @@
             this.presetsToolStripMenuItem.Name = "presetsToolStripMenuItem";
             this.presetsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.presetsToolStripMenuItem.Text = "Presets";
+            // 
+            // everythingElseMenuItem
+            // 
+            this.everythingElseMenuItem.Checked = true;
+            this.everythingElseMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.everythingElseMenuItem.Name = "everythingElseMenuItem";
+            this.everythingElseMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.everythingElseMenuItem.Text = "Everything else";
+            this.everythingElseMenuItem.Click += new System.EventHandler(this.everythingElseMenuItem_Click);
             // 
             // Cellekta
             // 
@@ -459,6 +470,7 @@
         private System.Windows.Forms.CheckBox rangeCheckBox;
         private System.Windows.Forms.ToolStripMenuItem afterMenuItem;
         private System.Windows.Forms.ToolStripMenuItem allMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem everythingElseMenuItem;
     }
 }
 

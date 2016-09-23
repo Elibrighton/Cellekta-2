@@ -140,26 +140,21 @@ namespace Cellekta_2
 
                 string[] row = new string[] { song.Artist, song.Title, trannyBpm, song.Key, song.Playlist };
 
+                var isAdding = false;
+
                 if (isRangeSelection)
-                {
-                    if ((string.IsNullOrEmpty(searchText) || song.Artist.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 || song.Title.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
-                        && (bpm == 0 || bpmRange.Contains(song.LeadingBpm))
-                        && (string.IsNullOrEmpty(key) || keyRange.Contains(song.Key))
-                        && (string.IsNullOrEmpty(playlist) || song.Playlist == playlist)
-                        && (weddingMenuItem.Checked || (!weddingMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Wedding")))
-                        && (electroHouseMenuItem.Checked || (!electroHouseMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Electro house"))))
-                        songsGridView.Rows.Add(row);
-                }
+                    isAdding = (bpm == 0 || bpmRange.Contains(song.LeadingBpm));
                 else
-                {
-                    if ((string.IsNullOrEmpty(searchText) || song.Artist.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 || song.Title.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
-                        && (bpm == 0 || song.LeadingBpm == bpm)
-                        && (String.IsNullOrEmpty(key) || song.Key == key)
-                        && (String.IsNullOrEmpty(playlist) || song.Playlist == playlist)
-                        && (weddingMenuItem.Checked || (!weddingMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Wedding")))
-                        && (electroHouseMenuItem.Checked || (!electroHouseMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Electro house"))))
-                        songsGridView.Rows.Add(row);
-                }
+                    isAdding = (bpm == 0 || song.LeadingBpm == bpm);
+
+                if (isAdding
+                    && (string.IsNullOrEmpty(searchText) || song.Artist.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 || song.Title.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                    && (String.IsNullOrEmpty(key) || song.Key == key)
+                    && (String.IsNullOrEmpty(playlist) || song.Playlist == playlist)
+                    && (weddingMenuItem.Checked || (!weddingMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Wedding")))
+                    && (electroHouseMenuItem.Checked || (!electroHouseMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Electro house")))
+                    && (everythingElseMenuItem.Checked | (!everythingElseMenuItem.Checked && (song.FullName.Contains(@"C:\Dj Music\Wedding") || song.FullName.Contains(@"C:\Dj Music\Electro house")))))
+                    songsGridView.Rows.Add(row);
 
             }
             // takes too long while debugging
@@ -662,6 +657,16 @@ namespace Cellekta_2
                 isRangeSelection = true;
             else
                 isRangeSelection = false;
+        }
+
+        private void everythingElseMenuItem_Click(object sender, EventArgs e)
+        {
+            if (everythingElseMenuItem.Checked)
+                everythingElseMenuItem.Checked = false;
+            else
+                everythingElseMenuItem.Checked = true;
+
+            PopulateSongs();
         }
 
         //private void rangeMenuItem_Click(object sender, EventArgs e)
