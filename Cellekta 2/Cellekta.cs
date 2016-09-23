@@ -24,6 +24,7 @@ namespace Cellekta_2
         public bool isRangeSelection;
         public static Dictionary<string, int> keyDictionary = new Dictionary<string, int> { };
         public static Dictionary<int, int> bpmDictionary = new Dictionary<int, int> { };
+        int bpmRangeSelector = 3;
 
         public Cellekta()
         {
@@ -123,7 +124,7 @@ namespace Cellekta_2
 
             if (isRangeSelection)
             {
-                bpmRange = Song.GetBpmRange(bpm);
+                bpmRange = Song.GetBpmRange(bpm, bpmRangeSelector);
 
                 if (!string.IsNullOrEmpty(key))
                     keyRange = Song.GetKeyRange(key);
@@ -670,15 +671,49 @@ namespace Cellekta_2
             PopulateSongs();
         }
 
-        //private void rangeMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    if (rangeMenuItem.Checked)
-        //        rangeMenuItem.Checked = false;
-        //    else
-        //        rangeMenuItem.Checked = true;
+        private void rangeMenuItem3_Click(object sender, EventArgs e)
+        {
+            if (!rangeMenuItem3.Checked)
+            {
+                rangeMenuItem3.Checked = true;
+                bpmRangeSelector = 3;
+            }
 
-        //    //isRangeSelection = rangeMenuItem.Checked;
-        //    PopulateSongs();
-        //}
+
+            rangeMenuItem6.Checked = false;
+            rangeMenuItem12.Checked = false;
+
+            PopulateSongs();
+        }
+
+        private void rangeMenuItem6_Click(object sender, EventArgs e)
+        {
+            if (!rangeMenuItem6.Checked)
+            {
+                rangeMenuItem6.Checked = true;
+                bpmRangeSelector = 6;
+            }
+
+
+            rangeMenuItem3.Checked = false;
+            rangeMenuItem12.Checked = false;
+
+            PopulateSongs();
+        }
+
+        private void rangeMenuItem12_Click(object sender, EventArgs e)
+        {
+            if (!rangeMenuItem12.Checked)
+            {
+                rangeMenuItem12.Checked = true;
+                bpmRangeSelector = 12;
+            }
+
+
+            rangeMenuItem3.Checked = false;
+            rangeMenuItem6.Checked = false;
+
+            PopulateSongs();
+        }
     }
 }

@@ -224,12 +224,11 @@ namespace TraktorLibrary
             return _ratedArtists.Contains(_artist);
         }
 
-        public static List<int> GetBpmRange(int bpm)
+        public static List<int> GetBpmRange(int bpm, int bpmRangeSelector)
         {
             var bpmRange = new List<int>();
-            // turn 3 into a bpm range variable that can be set to 6 or 9 etc
-            var upperBPM = bpm + 3;
-            var lowerBPM = bpm - 3;
+            var upperBPM = bpm + bpmRangeSelector;
+            var lowerBPM = bpm - bpmRangeSelector;
             var upperDoubleBPM = upperBPM * 2;
             var lowerDoubleBPM = lowerBPM * 2;
             var upperHalfBPM = upperBPM / 2;
