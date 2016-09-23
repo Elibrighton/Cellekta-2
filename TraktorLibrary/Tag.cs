@@ -18,10 +18,13 @@ namespace TraktorLibrary
 
         public Tag(string fullName)
         {
-            _fullName = fullName;
-            _f = TagLib.File.Create(_fullName);
-            _title = _f.Tag.Title;
-            _artist = _f.Tag.FirstArtist;
+            if (fullName != string.Empty)
+            {
+                _fullName = fullName;
+                _f = TagLib.File.Create(_fullName);
+                _title = _f.Tag.Title;
+                _artist = _f.Tag.FirstArtist;
+            }
         }
     }
 }

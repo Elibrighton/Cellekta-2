@@ -304,5 +304,21 @@ namespace TraktorLibrary_Tests
             Assert.IsTrue(song.LeadingBpm == 118);
             Assert.IsTrue(song.Key == "4m");
         }
+
+        [TestMethod]
+        public void CreateNewTagObject_NullObject_Test()
+        {
+            // Arrange
+            var testFullName = string.Empty;
+            ITag testTag = new Tag(testFullName);
+
+            // Act
+            var testArtist = testTag.Artist;
+            var testTitle = testTag.Title;
+
+            // Assert
+            Assert.IsNull(testArtist);
+            Assert.IsNull(testTitle);
+        }
     }
 }
