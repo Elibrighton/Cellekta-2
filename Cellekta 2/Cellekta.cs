@@ -14,7 +14,13 @@ namespace Cellekta_2
 {
     public partial class Cellekta : Form
     {
-        //private List<ISong> music;
+        const int COLUMN_RATING = 0;
+        const int COLUMN_ARTIST = 1;
+        const int COLUMN_TITLE = 2;
+        const int COLUMN_BPM = 3;
+        const int COLUMN_KEY = 4;
+        const int COLUMN_PLAYLIST = 5;
+
         private ILibrary library;
         public bool isInserting { get; set; }
         public int listRowInsertIndex { get; set; }
@@ -209,7 +215,7 @@ namespace Cellekta_2
 
                 var leadingBpm = 0;
                 var trailingBpm = 0;
-                var bpmText = row.Cells[2].Value.ToString();
+                var bpmText = row.Cells[COLUMN_BPM].Value.ToString();
                 int index = bpmText.IndexOf(" - ");
 
                 if (index > 0)
@@ -224,12 +230,12 @@ namespace Cellekta_2
 
                 AddSongToList(new Song()
                 {
-                    Artist = row.Cells[0].Value.ToString(),
-                    Title = row.Cells[1].Value.ToString(),
+                    Artist = row.Cells[COLUMN_ARTIST].Value.ToString(),
+                    Title = row.Cells[COLUMN_TITLE].Value.ToString(),
                     LeadingBpm = leadingBpm,
                     TrailingBpm = trailingBpm,
-                    Key = Convert.ToString(row.Cells[3].Value),
-                    Playlist = Convert.ToString(row.Cells[4].Value)
+                    Key = Convert.ToString(row.Cells[COLUMN_KEY].Value),
+                    Playlist = Convert.ToString(row.Cells[COLUMN_PLAYLIST].Value)
                 });
             }
         }
@@ -400,10 +406,10 @@ namespace Cellekta_2
 
                 DataGridViewRow row = listGridView.Rows[rowindex];
 
-                var bpm = Convert.ToString(row.Cells[2].Value);
+                var bpm = Convert.ToString(row.Cells[COLUMN_BPM].Value);
                 bpmComboBox.SelectedItem = bpm;
 
-                var key = Convert.ToString(row.Cells[3].Value);
+                var key = Convert.ToString(row.Cells[COLUMN_KEY].Value);
                 keyComboBox.SelectedItem = key;
 
                 playlistComboBox.SelectedIndex = 0;
@@ -433,8 +439,8 @@ namespace Cellekta_2
 
                     DataGridViewRow row = listGridView.Rows[rowindex];
 
-                    var bpm = Convert.ToString(row.Cells[2].Value);
-                    var key = Convert.ToString(row.Cells[3].Value);
+                    var bpm = Convert.ToString(row.Cells[COLUMN_BPM].Value);
+                    var key = Convert.ToString(row.Cells[COLUMN_KEY].Value);
 
                     isPopulating = true;
                     bpmComboBox.SelectedItem = bpm;
@@ -474,8 +480,8 @@ namespace Cellekta_2
 
                 DataGridViewRow row = listGridView.Rows[listRowReplaceIndex];
 
-                var bpm = Convert.ToString(row.Cells[2].Value);
-                var key = Convert.ToString(row.Cells[3].Value);
+                var bpm = Convert.ToString(row.Cells[COLUMN_BPM].Value);
+                var key = Convert.ToString(row.Cells[COLUMN_KEY].Value);
 
                 isPopulating = true;
                 bpmComboBox.SelectedItem = bpm;
@@ -519,33 +525,6 @@ namespace Cellekta_2
             }
         }
 
-        //private void clearAllMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    listGridView.Rows.Clear();
-        //    listGridView.Refresh();
-
-        //    musicTabControl.SelectedTab = listTabPage;
-        //}
-
-        //private void clearAfterMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    if (listGridView.Rows.Count > 1 && listGridView.SelectedRows.Count > 0)
-        //    {
-        //        var selectedListRowIndex = listGridView.SelectedRows[0].Index;
-
-        //        for (int i = 0; i < listGridView.Rows.Count; i++) //&& listGridView.Rows.Count > 2
-        //        {
-        //            if (i > selectedListRowIndex && i < listGridView.Rows.Count - 1)
-        //            {
-        //                listGridView.Rows.RemoveAt(i);
-        //                listGridView.Refresh();
-        //                i--;
-        //            }
-        //        }
-
-        //        musicTabControl.SelectedTab = listTabPage;
-        //    }
-        //}
 
         private void clearSongFiltersMenuItem_Click(object sender, EventArgs e)
         {
@@ -567,8 +546,8 @@ namespace Cellekta_2
 
                 DataGridViewRow row = listGridView.Rows[listRowInsertIndex];
 
-                var bpm = Convert.ToString(row.Cells[2].Value);
-                var key = Convert.ToString(row.Cells[3].Value);
+                var bpm = Convert.ToString(row.Cells[COLUMN_BPM].Value);
+                var key = Convert.ToString(row.Cells[COLUMN_KEY].Value);
 
                 isPopulating = true;
                 bpmComboBox.SelectedItem = bpm;
