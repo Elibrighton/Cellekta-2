@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraktorLibrary", "TraktorLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraktorLibrary Tests", "TraktorLibrary Tests\TraktorLibrary Tests.csproj", "{8365E889-A597-45AA-8FDC-AA79E96759B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ratings", "Ratings\Ratings.csproj", "{48773069-4A06-4479-A15D-270EF0C7BA96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ratings Tests", "Ratings Tests\Ratings Tests.csproj", "{F276F672-ABB6-41BE-AB13-113F69A8B409}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{8365E889-A597-45AA-8FDC-AA79E96759B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8365E889-A597-45AA-8FDC-AA79E96759B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8365E889-A597-45AA-8FDC-AA79E96759B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48773069-4A06-4479-A15D-270EF0C7BA96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48773069-4A06-4479-A15D-270EF0C7BA96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48773069-4A06-4479-A15D-270EF0C7BA96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48773069-4A06-4479-A15D-270EF0C7BA96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F276F672-ABB6-41BE-AB13-113F69A8B409}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F276F672-ABB6-41BE-AB13-113F69A8B409}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F276F672-ABB6-41BE-AB13-113F69A8B409}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F276F672-ABB6-41BE-AB13-113F69A8B409}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
