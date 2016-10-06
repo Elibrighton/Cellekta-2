@@ -52,6 +52,12 @@
     <Compile Include="Song.cs" />
     <Compile Include="Tag.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ratings\Ratings.csproj">
+      <Project>{48773069-4a06-4479-a15d-270ef0c7ba96}</Project>
+      <Name>Ratings</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

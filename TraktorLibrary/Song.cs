@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ratings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -214,6 +215,12 @@ namespace TraktorLibrary
 
         public void GetRating()
         {
+            ICharts charts = new Charts();
+            charts.GetCharts();
+
+            if (charts.IsChartedSong(_artist, _title))
+                _rating += 1;
+
             if (IsArtistRated())
             {
                 _rating += 1;

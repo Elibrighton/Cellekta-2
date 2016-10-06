@@ -58,15 +58,15 @@
             this.clearMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.afterMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.allMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rangeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rangeMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.rangeMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
+            this.rangeMenuItem12 = new System.Windows.Forms.ToolStripMenuItem();
             this.playlistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.electroHouseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.weddingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.everythingElseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.presetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rangeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rangeMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.rangeMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
-            this.rangeMenuItem12 = new System.Windows.Forms.ToolStripMenuItem();
             this.musicTabControl.SuspendLayout();
             this.listTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.listGridView)).BeginInit();
@@ -311,6 +311,7 @@
             // 
             // menuStrip2
             // 
+            this.menuStrip2.BackColor = System.Drawing.SystemColors.Control;
             this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenu,
             this.selectionMenuItem,
@@ -360,22 +361,55 @@
             this.afterMenuItem,
             this.allMenuItem});
             this.clearMenuItem.Name = "clearMenuItem";
-            this.clearMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearMenuItem.Size = new System.Drawing.Size(107, 22);
             this.clearMenuItem.Text = "Clear";
             // 
             // afterMenuItem
             // 
             this.afterMenuItem.Name = "afterMenuItem";
-            this.afterMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.afterMenuItem.Size = new System.Drawing.Size(100, 22);
             this.afterMenuItem.Text = "After";
             this.afterMenuItem.Click += new System.EventHandler(this.afterMenuItem_Click);
             // 
             // allMenuItem
             // 
             this.allMenuItem.Name = "allMenuItem";
-            this.allMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.allMenuItem.Size = new System.Drawing.Size(100, 22);
             this.allMenuItem.Text = "All";
             this.allMenuItem.Click += new System.EventHandler(this.allMenuItem_Click);
+            // 
+            // rangeMenuItem
+            // 
+            this.rangeMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rangeMenuItem3,
+            this.rangeMenuItem6,
+            this.rangeMenuItem12});
+            this.rangeMenuItem.Name = "rangeMenuItem";
+            this.rangeMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.rangeMenuItem.Text = "Range";
+            // 
+            // rangeMenuItem3
+            // 
+            this.rangeMenuItem3.Checked = true;
+            this.rangeMenuItem3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.rangeMenuItem3.Name = "rangeMenuItem3";
+            this.rangeMenuItem3.Size = new System.Drawing.Size(86, 22);
+            this.rangeMenuItem3.Text = "3";
+            this.rangeMenuItem3.Click += new System.EventHandler(this.rangeMenuItem3_Click);
+            // 
+            // rangeMenuItem6
+            // 
+            this.rangeMenuItem6.Name = "rangeMenuItem6";
+            this.rangeMenuItem6.Size = new System.Drawing.Size(86, 22);
+            this.rangeMenuItem6.Text = "6";
+            this.rangeMenuItem6.Click += new System.EventHandler(this.rangeMenuItem6_Click);
+            // 
+            // rangeMenuItem12
+            // 
+            this.rangeMenuItem12.Name = "rangeMenuItem12";
+            this.rangeMenuItem12.Size = new System.Drawing.Size(86, 22);
+            this.rangeMenuItem12.Text = "12";
+            this.rangeMenuItem12.Click += new System.EventHandler(this.rangeMenuItem12_Click);
             // 
             // playlistsToolStripMenuItem
             // 
@@ -415,39 +449,6 @@
             this.presetsToolStripMenuItem.Name = "presetsToolStripMenuItem";
             this.presetsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.presetsToolStripMenuItem.Text = "Presets";
-            // 
-            // rangeMenuItem
-            // 
-            this.rangeMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.rangeMenuItem3,
-            this.rangeMenuItem6,
-            this.rangeMenuItem12});
-            this.rangeMenuItem.Name = "rangeMenuItem";
-            this.rangeMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.rangeMenuItem.Text = "Range";
-            // 
-            // rangeMenuItem3
-            // 
-            this.rangeMenuItem3.Checked = true;
-            this.rangeMenuItem3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.rangeMenuItem3.Name = "rangeMenuItem3";
-            this.rangeMenuItem3.Size = new System.Drawing.Size(152, 22);
-            this.rangeMenuItem3.Text = "3";
-            this.rangeMenuItem3.Click += new System.EventHandler(this.rangeMenuItem3_Click);
-            // 
-            // rangeMenuItem6
-            // 
-            this.rangeMenuItem6.Name = "rangeMenuItem6";
-            this.rangeMenuItem6.Size = new System.Drawing.Size(152, 22);
-            this.rangeMenuItem6.Text = "6";
-            this.rangeMenuItem6.Click += new System.EventHandler(this.rangeMenuItem6_Click);
-            // 
-            // rangeMenuItem12
-            // 
-            this.rangeMenuItem12.Name = "rangeMenuItem12";
-            this.rangeMenuItem12.Size = new System.Drawing.Size(152, 22);
-            this.rangeMenuItem12.Text = "12";
-            this.rangeMenuItem12.Click += new System.EventHandler(this.rangeMenuItem12_Click);
             // 
             // Cellekta
             // 
