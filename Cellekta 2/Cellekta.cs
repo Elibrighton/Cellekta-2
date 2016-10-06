@@ -28,6 +28,7 @@ namespace Cellekta_2
         public bool isReplacing { get; set; }
         public bool isPopulating;
         public bool isRangeSelection;
+        public bool isRatedSelection;
         public static Dictionary<string, int> keyDictionary = new Dictionary<string, int> { };
         public static Dictionary<int, int> bpmDictionary = new Dictionary<int, int> { };
         int bpmRangeSelector = 3;
@@ -153,6 +154,16 @@ namespace Cellekta_2
                     isAdding = (bpm == 0 || bpmRange.Contains(song.LeadingBpm));
                 else
                     isAdding = (bpm == 0 || song.LeadingBpm == bpm);
+
+                if (isAdding)
+                {
+                    if (!isRatedSelection)
+                        isAdding = true;
+                    else if (isRatedSelection && song.Rating > 0)
+                        isAdding = true;
+                    else
+                        isAdding = false;
+                }
 
                 if (isAdding
                     && (string.IsNullOrEmpty(searchText) || song.Artist.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 || song.Title.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
@@ -661,8 +672,7 @@ namespace Cellekta_2
                 rangeMenuItem3.Checked = true;
                 bpmRangeSelector = 3;
             }
-
-
+            
             rangeMenuItem6.Checked = false;
             rangeMenuItem12.Checked = false;
 
@@ -697,6 +707,20 @@ namespace Cellekta_2
             rangeMenuItem6.Checked = false;
 
             PopulateSongs();
+        }
+
+        private void ratedCheckBox_Click(object sender, EventArgs e)
+        {
+            SetRatedSelection();
+            PopulateSongs();
+        }
+
+        private void SetRatedSelection()
+        {
+            if (ratedCheckBox.Checked)
+                isRatedSelection = true;
+            else
+                isRatedSelection = false;
         }
     }
 }

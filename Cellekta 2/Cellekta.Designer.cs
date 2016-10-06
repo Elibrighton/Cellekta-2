@@ -67,6 +67,7 @@
             this.weddingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.everythingElseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.presetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ratedCheckBox = new System.Windows.Forms.CheckBox();
             this.musicTabControl.SuspendLayout();
             this.listTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.listGridView)).BeginInit();
@@ -184,6 +185,7 @@
             // 
             // songsTabPage
             // 
+            this.songsTabPage.Controls.Add(this.ratedCheckBox);
             this.songsTabPage.Controls.Add(this.rangeCheckBox);
             this.songsTabPage.Controls.Add(this.cancelButton);
             this.songsTabPage.Controls.Add(this.searchLabel);
@@ -450,6 +452,17 @@
             this.presetsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.presetsToolStripMenuItem.Text = "Presets";
             // 
+            // ratedCheckBox
+            // 
+            this.ratedCheckBox.AutoSize = true;
+            this.ratedCheckBox.Location = new System.Drawing.Point(627, 271);
+            this.ratedCheckBox.Name = "ratedCheckBox";
+            this.ratedCheckBox.Size = new System.Drawing.Size(55, 17);
+            this.ratedCheckBox.TabIndex = 13;
+            this.ratedCheckBox.Text = "Rated";
+            this.ratedCheckBox.UseVisualStyleBackColor = true;
+            this.ratedCheckBox.Click += new System.EventHandler(this.ratedCheckBox_Click);
+            // 
             // Cellekta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -514,6 +527,7 @@
         private System.Windows.Forms.ToolStripMenuItem rangeMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem rangeMenuItem6;
         private System.Windows.Forms.ToolStripMenuItem rangeMenuItem12;
+        private System.Windows.Forms.CheckBox ratedCheckBox;
     }
 }
 

@@ -14,6 +14,7 @@ namespace Ratings
         {
             _charts = new List<IChart>
             {
+                // aria singles
                 new Chart { Artist = "The Chainsmokers Feat. Halsey", Title = "Closer" },
                 new Chart { Artist = "Calum Scott", Title = "Dancing on My Own" },
                 new Chart { Artist = "James Arthur", Title = "Say You Won't Let Go" },
@@ -63,7 +64,71 @@ namespace Ratings
                 new Chart { Artist = "Mike Posner", Title = "I Took A Pill In Ibiza" },
                 new Chart { Artist = "Rihanna", Title = "Needed Me" },
                 new Chart { Artist = "Desiigner", Title = "Panda" },
-                new Chart { Artist = "Drake", Title = "Controlla" }
+                new Chart { Artist = "Drake", Title = "Controlla" },
+
+                // aria urban
+                new Chart { Title = "Starboy", Artist = "The Weeknd Feat. Daft Punk" },
+                new Chart { Title = "Sucker For Pain", Artist = "Lil Wayne, Wiz Khalifa & Imagine Dragons, X Ambassadors, Ty Dolla $ign, Logic" },
+                new Chart { Title = "Papercuts", Artist = "Illy Feat. Vera Blue" },
+                new Chart { Title = "Too Good", Artist = "Drake Feat. Rihanna" },
+                new Chart { Title = "Crash", Artist = "Usher" },
+                new Chart { Title = "Don't Mind", Artist = "Kent Jones" },
+                new Chart { Title = "Work From Home", Artist = "Fifth Harmony Feat. Ty Dolla $ign" },
+                new Chart { Title = "1955", Artist = "Hilltop Hoods Feat. Montaigne & Tom Thum" },
+                new Chart { Title = "All In My Head (Flex)", Artist = "Fifth Harmony Feat. Fetty Wap" },
+                new Chart { Title = "Uptown Funk", Artist = "Mark Ronson Feat. Bruno Mars" },
+                new Chart { Title = "Do You Mind", Artist = "DJ Khaled Feat. Nicki Minaj, Chris Brown, August Alsina, Jeremih, Future & Rick Ross" },
+                new Chart { Title = "Can't Feel My Face", Artist = "The Weeknd" },
+                new Chart { Title = "Wavy", Artist = "Ty Dolla $ign Feat. Joe Moses" },
+                new Chart { Title = "The Hills", Artist = "The Weeknd" },
+                new Chart { Title = "Dang!", Artist = "Mac Miller" },
+                new Chart { Title = "Hotline Bling", Artist = "Drake" },
+                new Chart { Title = "All of Me", Artist = "John Legend" },
+                new Chart { Title = "Without Me", Artist = "Eminem" },
+                new Chart { Title = "Ni**as In Paris", Artist = "Jay-Z & Kanye West" },
+                new Chart { Title = "In My Mind", Artist = "Maty Noyes" },
+                new Chart { Title = "See You Again", Artist = "Wiz Khalifa Feat. Charlie Puth" },
+                new Chart { Title = "Pick Up The Phone", Artist = "Young Thug & Travis Scott Feat. Quavo" },
+                new Chart { Title = "King Kunta", Artist = "Kendrick Lamar" },
+                new Chart { Title = "Downtown", Artist = "Macklemore & Ryan Lewis Feat. Eric Nally, Melle Mel, Kool Moe Dee & Grandmaster Caz" },
+                new Chart { Title = "Never Say Never", Artist = "Thundamentals" },
+                new Chart { Title = "For Free", Artist = "DJ Khaled Feat. Drake" },
+                new Chart { Title = "679", Artist = "Fetty Wap Feat. Remy Boyz" },
+                new Chart { Title = "Stronger", Artist = "Kanye West" },
+                new Chart { Title = "We Found Love", Artist = "Rihanna Feat. Calvin Harris" },
+                new Chart { Title = "Brad Pitt's Cousin", Artist = "Macklemore & Ryan Lewis Feat. Xperience" },
+                new Chart { Title = "Love The Way You Lie", Artist = "Eminem Feat. Rihanna" },
+                new Chart { Title = "Halo", Artist = "Beyonce" },
+                new Chart { Title = "Hold Up", Artist = "Beyonce" },
+                new Chart { Title = "The Monster", Artist = "Eminem Feat. Rihanna" },
+                new Chart { Title = "Calling Out", Artist = "PEZ Feat. Paul Dempsey" },
+                new Chart { Title = "Bang Bang", Artist = "Jessie J Feat. Nicki Minaj & Ariana Grande" },
+                new Chart { Title = "The Real Slim Shady", Artist = "Eminem" },
+                new Chart { Title = "Diamonds", Artist = "Rihanna" },
+                new Chart { Title = "FourFiveSeconds", Artist = "Rihanna, Paul McCartney & Kanye West" },
+                new Chart { Title = "Rap God", Artist = "Eminem" },
+
+                // aria dance 
+                new Chart { Title = "Closer", Artist = "The Chainsmokers Feat. Halsey" },
+                new Chart { Title = "The Greatest", Artist = "Sia Feat. Kendrick Lamar" },
+                new Chart { Title = "Cold Water", Artist = "Major Lazer Feat. Justin Bieber & MØ" },
+                new Chart { Title = "My Way", Artist = "Calvin Harris" },
+                new Chart { Title = "Perfect Strangers", Artist = "Jonas Blue" },
+                new Chart { Title = "In The Name Of Love", Artist = "Martin Garrix & Bebe Rexha" },
+                new Chart { Title = "The Ocean", Artist = "Mike Perry" },
+                new Chart { Title = "This Is What You Came For", Artist = "Calvin Harris Feat. Rihanna" },
+                new Chart { Title = "Say It", Artist = "Flume Feat. Tove Lo" },
+                new Chart { Title = "Cheap Thrills", Artist = "Sia" },
+                new Chart { Title = "I Hate U, I Love U", Artist = "Gnash Feat. Olivia O'Brien" },
+                new Chart { Title = "Never Be Like You", Artist = "Flume Feat. Kai" },
+                new Chart { Title = "Let Me Hold You (Turn Me On)", Artist = "Cheat Codes & Dante Klein" },
+                new Chart { Title = "Don't Be So Shy (Filatov & Karas Remix)", Artist = "Imany" },
+                new Chart { Title = "Sex", Artist = "Cheat Codes Feat. Kris Kross Amsterdam" },
+                new Chart { Title = "Money Maker", Artist = "Throttle Feat. LunchMoney Lewis & Aston Merrygold" },
+                new Chart { Title = "No Money", Artist = "Galantis" },
+                new Chart { Title = "Purple Lamborghini", Artist = "Skrillex & Rick Ross" },
+                new Chart { Title = "Fast Car", Artist = "Jonas Blue Feat. Dakota" },
+                new Chart { Title = "Home", Artist = "Topic Feat. Nico Santos" }
             };
 
             for (int i = 0; i < _charts.Count; i++)
@@ -75,6 +140,24 @@ namespace Ratings
 
                 if (index > 0)
                     chart.Artist = chart.Artist.Substring(0, index - 1);
+
+                index = chart.Artist.IndexOf(" & ", StringComparison.OrdinalIgnoreCase);
+
+                if (index > 0)
+                    chart.Artist = chart.Artist.Substring(0, index - 1);
+
+                index = chart.Artist.IndexOf(", ", StringComparison.OrdinalIgnoreCase);
+
+                if (index > 0)
+                    chart.Artist = chart.Artist.Substring(0, index - 1);
+
+                index = chart.Title.IndexOf(" (", StringComparison.OrdinalIgnoreCase);
+
+                if (index > 0)
+                    chart.Artist = chart.Title.Substring(0, index - 1);
+
+                chart.Artist.Trim();
+                chart.Title.Trim();
             }
 
             return _charts;
@@ -86,7 +169,7 @@ namespace Ratings
 
             foreach (var chart in _charts)
             {
-                if (artist.IndexOf(chart.Artist, StringComparison.OrdinalIgnoreCase) >= 0 
+                if (artist.IndexOf(chart.Artist, StringComparison.OrdinalIgnoreCase) >= 0
                     && title.IndexOf(chart.Title, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     isCharted = true;
