@@ -128,7 +128,129 @@ namespace Ratings
                 new Chart { Title = "No Money", Artist = "Galantis" },
                 new Chart { Title = "Purple Lamborghini", Artist = "Skrillex & Rick Ross" },
                 new Chart { Title = "Fast Car", Artist = "Jonas Blue Feat. Dakota" },
-                new Chart { Title = "Home", Artist = "Topic Feat. Nico Santos" }
+                new Chart { Title = "Home", Artist = "Topic Feat. Nico Santos" },
+
+                // billboard hot 100
+                new Chart { Title = "Closer", Artist = "The Chainsmokers Featuring Halsey" },
+                new Chart { Title = "The Weeknd Featuring Daft Punk", Artist = "Digital Gainer" },
+                new Chart { Title = "Starboy", Artist = "The Weeknd Featuring Daft Punk" },
+                new Chart { Title = "This Town", Artist = "Niall Horan" },
+                new Chart { Title = "Heathens", Artist = "twenty one pilots" },
+                new Chart { Title = "Starboy", Artist = "The Weeknd Featuring Daft Punk" },
+                new Chart { Title = "Cold Water", Artist = "Major Lazer Featuring Justin Bieber & MO" },
+                new Chart { Title = "Let Me Love You", Artist = "DJ Snake Featuring Justin Bieber" },
+                new Chart { Title = "Treat You Better", Artist = "Shawn Mendes" },
+                new Chart { Title = "Cheap Thrills", Artist = "Sia Featuring Sean Paul" },
+                new Chart { Title = "Broccoli", Artist = "D.R.A.M. Featuring Lil Yachty" },
+                new Chart { Title = "Don't Let Me Down", Artist = "The Chainsmokers Featuring Daya " },
+                new Chart { Title = "This Is What You Came For", Artist = "Calvin Harris Featuring Rihanna" },
+                new Chart { Title = "The Hills", Artist = "The Weeknd" },
+                new Chart { Title = "We Don't Talk Anymore", Artist = "Charlie Puth Featuring Selena Gomez" },
+                new Chart { Title = "Ride", Artist = "twenty one pilots" },
+                new Chart { Title = "I Hate U I Love U", Artist = "gnash Featuring Olivia O'Brien" },
+                new Chart { Title = "One Dance", Artist = "Drake Featuring WizKid & Kyla" },
+                new Chart { Title = "Gold", Artist = "Kiiara" },
+                new Chart { Title = "Send My Love (To Your New Lover)", Artist = "Adele" },
+                new Chart { Title = "Needed Me", Artist = "Rihanna " },
+                new Chart { Title = "Too Good", Artist = "Drake Featuring Rihanna" },
+                new Chart { Title = "Side To Side", Artist = "Ariana Grande Featuring Nicki Minaj" },
+                new Chart { Title = "Can't Stop The Feeling!", Artist = "Justin Timberlake " },
+                new Chart { Title = "Luv", Artist = "Tory Lanez" },
+                new Chart { Title = "Sucker For Pain", Artist = "Lil Wayne, Wiz Khalifa & Imagine Dragons With Logic & Ty Dolla $ign Feat. X Ambassadors" },
+                new Chart { Title = "Into You", Artist = "Ariana Grande" },
+                new Chart { Title = "Starving", Artist = "Hailee Steinfeld & Grey Featuring Zedd" },
+                new Chart { Title = "Hymn For The Weekend", Artist = "Coldplay" },
+                new Chart { Title = "Unsteady", Artist = "X Ambassadors " },
+                new Chart { Title = "My Way", Artist = "Calvin Harris" },
+                new Chart { Title = "Panda", Artist = "Desiigner " },
+                new Chart { Title = "This Girl", Artist = "Kungs vs Cookin' On 3 Burners " },
+                new Chart { Title = "The Greatest", Artist = "Sia Featuring Kendrick Lamar" },
+                new Chart { Title = "For Free", Artist = "DJ Khaled Featuring Drake" },
+                new Chart { Title = "Controlla", Artist = "Drake" },
+                new Chart { Title = "Sit Still, Look Pretty", Artist = "Daya" },
+                new Chart { Title = "Forever Country", Artist = "Artists Of Then, Now & Forever" },
+                new Chart { Title = "No Limit", Artist = "Usher Featuring Young Thug" },
+                new Chart { Title = "Setting The World On Fire", Artist = "Kenny Chesney Featuring P!nk" },
+                new Chart { Title = "Just Like Fire", Artist = "P!nk" },
+                new Chart { Title = "Work From Home", Artist = "Fifth Harmony Featuring Ty Dolla $ign " },
+                new Chart { Title = "Chill Bill", Artist = "Rob $tone Featuring J. Davi$ & Spooks" },
+                new Chart { Title = "Black Beatles", Artist = "Rae Sremmurd Featuring Gucci Mane" },
+                new Chart { Title = "Low Life", Artist = "Future Featuring The Weeknd " },
+                new Chart { Title = "Tiimmy Turner", Artist = "Desiigner" },
+                new Chart { Title = "It Don't Hurt Like It Used To", Artist = "Billy Currington" },
+                new Chart { Title = "Work", Artist = "Rihanna Featuring Drake " },
+                new Chart { Title = "I Took A Pill In Ibiza", Artist = "Mike Posner" },
+                new Chart { Title = "In The Name Of Love", Artist = "Martin Garrix & Bebe Rexha" },
+                new Chart { Title = "Never Be Like You", Artist = "Flume Featuring Kai" },
+                new Chart { Title = "Pick Up The Phone", Artist = "Young Thug And Travis Scott Featuring Quavo" },
+                new Chart { Title = "H.O.L.Y.", Artist = "Florida Georgia Line " },
+                new Chart { Title = "Scars To Your Beautiful", Artist = "Alessia Cara" },
+                new Chart { Title = "Caroline", Artist = "Amine" },
+                new Chart { Title = "Blue Ain't Your Color", Artist = "Keith Urban" },
+                new Chart { Title = "No Problem", Artist = "Chance The Rapper Featuring Lil Wayne & 2 Chainz" },
+                new Chart { Title = "Different For Girls", Artist = "Dierks Bentley Featuring Elle King" },
+                new Chart { Title = "Middle Of A Memory", Artist = "Cole Swindell" },
+                new Chart { Title = "Father Stretch My Hands Pt. 1", Artist = "Kanye West" },
+                new Chart { Title = "Fade", Artist = "Kanye West" },
+                new Chart { Title = "Perfect Illusion", Artist = "Lady Gaga" },
+                new Chart { Title = "I Met A Girl", Artist = "William Michael Morgan" },
+                new Chart { Title = "Move", Artist = "Luke Bryan" },
+                new Chart { Title = "1 Night", Artist = "Lil Yachty" },
+                new Chart { Title = "This Town", Artist = "Niall Horan" },
+                new Chart { Title = "Vice", Artist = "Miranda Lambert" },
+                new Chart { Title = "May We All", Artist = "Florida Georgia Line Featuring Tim McGraw" },
+                new Chart { Title = "Money Longer", Artist = "Lil Uzi Vert" },
+                new Chart { Title = "Rock On", Artist = "Tucker Beathard " },
+                new Chart { Title = "Mercy", Artist = "Shawn Mendes" },
+                new Chart { Title = "Peter Pan", Artist = "Kelsea Ballerini " },
+                new Chart { Title = "Come And See Me", Artist = "PARTYNEXTDOOR Featuring Drake" },
+                new Chart { Title = "A Little More Summertime", Artist = "Jason Aldean" },
+                new Chart { Title = "I Know Somebody", Artist = "LoCash" },
+                new Chart { Title = "Mama Said", Artist = "Lukas Graham" },
+                new Chart { Title = "You & Me", Artist = "Marc E. Bassy Featuring G-Eazy  Full Track" },
+                new Chart { Title = "Me Too", Artist = "Meghan Trainor" },
+
+                // uk top 40 singles
+                new Chart { Title = "say you won't let go", Artist = "James Arthur" },
+                new Chart { Title = "closer (ft. halsey live at the 2016 mtv vma)", Artist = "The Chainsmokers" },
+                new Chart { Title = "starboy (ft. daft punk)", Artist = "The Weeknd" },
+                new Chart { Title = "my way", Artist = "Calvin Harris" },
+                new Chart { Title = "let me love you (ft. justin bieber)", Artist = "DJ Snake" },
+                new Chart { Title = "side to side (ft. nicki minaj live at the 2016 mtv vma)", Artist = "Ariana Grande" },
+                new Chart { Title = "cold water (ft. justin bieber & mø)", Artist = "Major Lazer" },
+                new Chart { Title = "the greatest (ft. kendrick lamar)", Artist = "Sia" },
+                new Chart { Title = "in the name of love", Artist = "Martin Garrix & Bebe Rexha" },
+                new Chart { Title = "dancing on my own", Artist = "Calum Scott" },
+                new Chart { Title = "still falling for you", Artist = "Ellie Goulding" },
+                new Chart { Title = "heathens", Artist = "twenty one pilots" },
+                new Chart { Title = "treat you better", Artist = "Shawn Mendes" },
+                new Chart { Title = "don't let me down (ft. daya)", Artist = "The Chainsmokers" },
+                new Chart { Title = "sucker for pain(ft.x ambassadors)", Artist = "Lil Wayne, Wiz Khalifa & Imagine Dragons w / Logic & Ty Dolla $ign" },
+                new Chart { Title = "perfect strangers(ft.jp cooper)", Artist = "Jonas Blue" },
+                new Chart { Title = "one dance(ft.wizkid & kyla)", Artist = "Drake" },
+                new Chart { Title = "alarm[explicit]", Artist = "Anne-Marie" },
+                new Chart { Title = "too good(ft.rihanna)", Artist = "Drake" },
+                new Chart { Title = "this is what you came for (ft.rihanna)", Artist = "Calvin Harris" },
+                new Chart { Title = "this girl", Artist = "Kungs VS Cookin' On 3 Burners" },
+                new Chart { Title = "hurts", Artist = "Emeli Sande" },
+                new Chart { Title = "ain't my fault", Artist = "Zara Larsson" },
+                new Chart { Title = "is this love(ft.lvndscape & bolier)", Artist = "Bob Marley" },
+                new Chart { Title = "millionaire(ft.nelly) [explicit]", Artist = "Digital Farm Animals & Cash Cash" },
+                new Chart { Title = "you don't know love", Artist = "Olly Murs" },
+                new Chart { Title = "can't stop the feeling!", Artist = "Justin Timberlake" },
+                new Chart { Title = "false alarm", Artist = "Matoma & Becky Hill" },
+                new Chart { Title = "we don't talk anymore (ft. selena gomez)", Artist = "Charlie Puth" },
+                new Chart { Title = "cheap thrills(performance edit)", Artist = "Sia" },
+                new Chart { Title = "good grief[explicit]", Artist = "Bastille" },
+                new Chart { Title = "trouble", Artist = "Offaiah" },
+                new Chart { Title = "into you", Artist = "Ariana Grande" },
+                new Chart { Title = "final song", Artist = "MØ" },
+                new Chart { Title = "tears(live from isle of mtv, malta 2016)", Artist = "Clean Bandit" },
+                new Chart { Title = "let me hold you(turn me on)", Artist = "Cheat Codes & Dante Klein" },
+                new Chart { Title = "starving(ft.zedd)", Artist = "Hailee Steinfeld & Grey" },
+                new Chart { Title = "blow your mind(mwah) [explicit]", Artist = "Dua Lipa" },
+                new Chart { Title = "ain't giving up", Artist = "Craig David & Sigala" },
+                new Chart { Title = "don't mind", Artist = "Kent Jones" },
             };
 
             for (int i = 0; i < _charts.Count; i++)
@@ -136,31 +258,40 @@ namespace Ratings
                 IChart chart = new Chart();
                 chart = _charts[i];
 
-                var index = chart.Artist.IndexOf(" Feat. ", StringComparison.OrdinalIgnoreCase);
-
-                if (index > 0)
-                    chart.Artist = chart.Artist.Substring(0, index - 1);
-
-                index = chart.Artist.IndexOf(" & ", StringComparison.OrdinalIgnoreCase);
-
-                if (index > 0)
-                    chart.Artist = chart.Artist.Substring(0, index - 1);
-
-                index = chart.Artist.IndexOf(", ", StringComparison.OrdinalIgnoreCase);
-
-                if (index > 0)
-                    chart.Artist = chart.Artist.Substring(0, index - 1);
-
-                index = chart.Title.IndexOf(" (", StringComparison.OrdinalIgnoreCase);
-
-                if (index > 0)
-                    chart.Artist = chart.Title.Substring(0, index - 1);
+                chart = RemoveFeaturingArtists(chart, "&");
+                chart = RemoveFeaturingArtists(chart, ",");
+                chart = RemoveFeaturingArtists(chart, "(");
+                chart = RemoveFeaturingArtists(chart, "[");
+                chart = RemoveFeaturingArtists(chart, "-");
+                chart = RemoveFeaturingArtists(chart, "Featuring");
+                chart = RemoveFeaturingArtists(chart, "Feat.");
+                chart = RemoveFeaturingArtists(chart, "Feat ");
+                chart = RemoveFeaturingArtists(chart, "Ft.");
+                chart = RemoveFeaturingArtists(chart, "Ft ");
+                chart = RemoveFeaturingArtists(chart, "Fe.");
+                chart = RemoveFeaturingArtists(chart, "F ");
 
                 chart.Artist.Trim();
                 chart.Title.Trim();
             }
 
             return _charts;
+        }
+
+        private IChart RemoveFeaturingArtists(IChart chart, string extra)
+        {
+            var index = chart.Artist.IndexOf(extra, StringComparison.OrdinalIgnoreCase);
+
+            if (index > 0)
+                chart.Artist = chart.Artist.Substring(0, index - 1);
+
+
+            index = chart.Title.IndexOf(extra, StringComparison.OrdinalIgnoreCase);
+
+            if (index > 0)
+                chart.Title = chart.Title.Substring(0, index - 1);
+
+            return chart;
         }
 
         public bool IsChartedSong(string artist, string title)

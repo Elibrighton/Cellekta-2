@@ -383,17 +383,18 @@ namespace Ratings
                 IRatedTitle ratedTitle = new RatedTitle();
                 ratedTitle = _ratedTitles[i];
 
+                ratedTitle = RemoveFeaturingArtists(ratedTitle, "&");
+                ratedTitle = RemoveFeaturingArtists(ratedTitle, ",");
+                ratedTitle = RemoveFeaturingArtists(ratedTitle, "(");
+                ratedTitle = RemoveFeaturingArtists(ratedTitle, "[");
+                ratedTitle = RemoveFeaturingArtists(ratedTitle, "-");
+                ratedTitle = RemoveFeaturingArtists(ratedTitle, "Featuring");
                 ratedTitle = RemoveFeaturingArtists(ratedTitle, "Feat.");
                 ratedTitle = RemoveFeaturingArtists(ratedTitle, "Feat ");
                 ratedTitle = RemoveFeaturingArtists(ratedTitle, "Ft.");
                 ratedTitle = RemoveFeaturingArtists(ratedTitle, "Ft ");
                 ratedTitle = RemoveFeaturingArtists(ratedTitle, "Fe.");
                 ratedTitle = RemoveFeaturingArtists(ratedTitle, "F ");
-                ratedTitle = RemoveFeaturingArtists(ratedTitle, "&");
-                ratedTitle = RemoveFeaturingArtists(ratedTitle, ",");
-                ratedTitle = RemoveFeaturingArtists(ratedTitle, "(");
-                ratedTitle = RemoveFeaturingArtists(ratedTitle, "[");
-                ratedTitle = RemoveFeaturingArtists(ratedTitle, "-");
 
                 ratedTitle.Artist.Trim();
                 ratedTitle.Title.Trim();
