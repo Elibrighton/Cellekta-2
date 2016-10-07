@@ -39,6 +39,7 @@
             this.listGridView = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.songsTabPage = new System.Windows.Forms.TabPage();
+            this.ratedCheckBox = new System.Windows.Forms.CheckBox();
             this.rangeCheckBox = new System.Windows.Forms.CheckBox();
             this.cancelButton = new System.Windows.Forms.Button();
             this.searchLabel = new System.Windows.Forms.Label();
@@ -67,7 +68,10 @@
             this.weddingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.everythingElseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.presetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ratedCheckBox = new System.Windows.Forms.CheckBox();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.artistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.previouslyPlayedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.currentSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.musicTabControl.SuspendLayout();
             this.listTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.listGridView)).BeginInit();
@@ -206,6 +210,17 @@
             this.songsTabPage.Text = "Songs";
             this.songsTabPage.UseVisualStyleBackColor = true;
             // 
+            // ratedCheckBox
+            // 
+            this.ratedCheckBox.AutoSize = true;
+            this.ratedCheckBox.Location = new System.Drawing.Point(627, 271);
+            this.ratedCheckBox.Name = "ratedCheckBox";
+            this.ratedCheckBox.Size = new System.Drawing.Size(55, 17);
+            this.ratedCheckBox.TabIndex = 13;
+            this.ratedCheckBox.Text = "Rated";
+            this.ratedCheckBox.UseVisualStyleBackColor = true;
+            this.ratedCheckBox.Click += new System.EventHandler(this.ratedCheckBox_Click);
+            // 
             // rangeCheckBox
             // 
             this.rangeCheckBox.AutoSize = true;
@@ -318,7 +333,8 @@
             this.fileMenu,
             this.selectionMenuItem,
             this.playlistsToolStripMenuItem,
-            this.presetsToolStripMenuItem});
+            this.presetsToolStripMenuItem,
+            this.exportToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Size = new System.Drawing.Size(784, 24);
@@ -452,16 +468,33 @@
             this.presetsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.presetsToolStripMenuItem.Text = "Presets";
             // 
-            // ratedCheckBox
+            // exportToolStripMenuItem
             // 
-            this.ratedCheckBox.AutoSize = true;
-            this.ratedCheckBox.Location = new System.Drawing.Point(627, 271);
-            this.ratedCheckBox.Name = "ratedCheckBox";
-            this.ratedCheckBox.Size = new System.Drawing.Size(55, 17);
-            this.ratedCheckBox.TabIndex = 13;
-            this.ratedCheckBox.Text = "Rated";
-            this.ratedCheckBox.UseVisualStyleBackColor = true;
-            this.ratedCheckBox.Click += new System.EventHandler(this.ratedCheckBox_Click);
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.artistsToolStripMenuItem,
+            this.previouslyPlayedToolStripMenuItem,
+            this.currentSetToolStripMenuItem});
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // artistsToolStripMenuItem
+            // 
+            this.artistsToolStripMenuItem.Name = "artistsToolStripMenuItem";
+            this.artistsToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.artistsToolStripMenuItem.Text = "Artists";
+            // 
+            // previouslyPlayedToolStripMenuItem
+            // 
+            this.previouslyPlayedToolStripMenuItem.Name = "previouslyPlayedToolStripMenuItem";
+            this.previouslyPlayedToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.previouslyPlayedToolStripMenuItem.Text = "Previously played";
+            // 
+            // currentSetToolStripMenuItem
+            // 
+            this.currentSetToolStripMenuItem.Name = "currentSetToolStripMenuItem";
+            this.currentSetToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.currentSetToolStripMenuItem.Text = "Current set";
             // 
             // Cellekta
             // 
@@ -528,6 +561,10 @@
         private System.Windows.Forms.ToolStripMenuItem rangeMenuItem6;
         private System.Windows.Forms.ToolStripMenuItem rangeMenuItem12;
         private System.Windows.Forms.CheckBox ratedCheckBox;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem artistsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem previouslyPlayedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem currentSetToolStripMenuItem;
     }
 }
 

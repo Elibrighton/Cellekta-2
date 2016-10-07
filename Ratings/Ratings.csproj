@@ -56,8 +56,16 @@
     </Compile>
     <Compile Include="IChart.cs" />
     <Compile Include="ICharts.cs" />
+    <Compile Include="IRatedArtist.cs" />
+    <Compile Include="IRatedArtists.cs" />
+    <Compile Include="IRatedTitle.cs" />
+    <Compile Include="IRatedTitles.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RatedArtist.cs" />
+    <Compile Include="RatedArtists.cs" />
+    <Compile Include="RatedTitle.cs" />
+    <Compile Include="RatedTitles.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

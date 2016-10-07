@@ -215,13 +215,25 @@ namespace TraktorLibrary
 
         public void GetRating()
         {
+            // move this to the Library class so that the object is not instantiated for each song
             ICharts charts = new Charts();
             charts.GetCharts();
 
             if (charts.IsChartedSong(_artist, _title))
                 _rating += 1;
 
-            if (IsArtistRated())
+            IRatedArtists ratedArtists = new RatedArtists();
+            ratedArtists.GetRatedArtists();
+
+            if (ratedArtists.IsRatedArtist(_artist))
+            {
+                _rating += 1;
+            }
+
+            IRatedTitles ratedTitles = new RatedTitles();
+            ratedTitles.GetRatedTitles();
+
+            if (ratedTitles.IsRatedTitle(_artist, _title))
             {
                 _rating += 1;
             }

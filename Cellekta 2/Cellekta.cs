@@ -47,6 +47,8 @@ namespace Cellekta_2
                 if (library.TempExists())
                 {
                     library.Import();
+                    //CreateOrderArtistsTxt();
+                    //CreatePreviouslyPlayedTxt();
                     PopulateSongs();
                     rangeCheckBox.Checked = true;
                     bpmDictionary = library.GetBpmDictionary();
@@ -69,6 +71,72 @@ namespace Cellekta_2
                 Close();
             }
         }
+
+        //private void CreatePreviouslyPlayedTxt()
+        //{
+        //    var previouslyPlaySongs = new List<string>();
+
+        //    foreach (ISong song in library.Music)
+        //    {
+        //        var title = song.Title;
+        //        var artist = song.Artist;
+
+        //        if (song.FullName.Contains("Previously played"))
+        //        {
+        //            if (!previouslyPlaySongs.Contains(title + "\t" + artist))
+        //            {
+        //                previouslyPlaySongs.Add(title + "\t" + artist);
+        //            }
+        //        }
+        //    }
+
+        //    string path = @"C:\Users\Dj Music\Desktop\PreviouslyPlayed.txt";
+
+        //    foreach (var song in previouslyPlaySongs)
+        //    {
+        //        if (!File.Exists(path))
+        //        {
+        //            // Create a file to write to.
+        //            string[] createText = { song };
+        //            File.WriteAllLines(path, createText);
+        //        }
+        //        else
+        //        {
+        //            File.AppendAllText(path, Environment.NewLine + song);
+        //        }
+        //    }
+        //}
+
+        //private void CreateOrderArtistsTxt()
+        //{
+        //    var orderedArtists = new List<string>();
+
+        //    foreach (ISong song in library.Music)
+        //    {
+        //        var artist = song.Artist;
+
+        //        if (!orderedArtists.Contains(artist))
+        //        {
+        //            orderedArtists.Add(artist);
+        //        }
+        //    }
+
+        //    string path = @"C:\Users\Dj Music\Desktop\OrderedArtists.txt";
+
+        //    foreach (var artist in orderedArtists)
+        //    {
+        //        if (!File.Exists(path))
+        //        {
+        //            // Create a file to write to.
+        //            string[] createText = { artist };
+        //            File.WriteAllLines(path, createText);
+        //        }
+        //        else
+        //        {
+        //            File.AppendAllText(path, Environment.NewLine + artist);
+        //        }
+        //    }
+        //}
 
         private void PopulatePlaylistList()
         {
@@ -165,17 +233,30 @@ namespace Cellekta_2
                         isAdding = false;
                 }
 
-                if (isAdding
-                    && (string.IsNullOrEmpty(searchText) || song.Artist.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 || song.Title.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
-                    && (String.IsNullOrEmpty(key) || song.Key == key)
-                    && (String.IsNullOrEmpty(playlist) || song.Playlist == playlist)
-                    && (weddingMenuItem.Checked || (!weddingMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Wedding")))
-                    && (electroHouseMenuItem.Checked || (!electroHouseMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Electro house")))
-                    && (everythingElseMenuItem.Checked | (!everythingElseMenuItem.Checked && (song.FullName.Contains(@"C:\Dj Music\Wedding") || song.FullName.Contains(@"C:\Dj Music\Electro house")))))
-                    songsGridView.Rows.Add(row);
-
+                if (isRangeSelection)
+                {
+                    if (isAdding
+                        && (string.IsNullOrEmpty(searchText) || song.Artist.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 || song.Title.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                        && (String.IsNullOrEmpty(key) || keyRange.Contains(song.Key))
+                        && (String.IsNullOrEmpty(playlist) || song.Playlist == playlist)
+                        && (weddingMenuItem.Checked || (!weddingMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Wedding")))
+                        && (electroHouseMenuItem.Checked || (!electroHouseMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Electro house")))
+                        && (everythingElseMenuItem.Checked | (!everythingElseMenuItem.Checked && (song.FullName.Contains(@"C:\Dj Music\Wedding") || song.FullName.Contains(@"C:\Dj Music\Electro house")))))
+                        songsGridView.Rows.Add(row);
+                }
+                else
+                {
+                    if (isAdding
+                        && (string.IsNullOrEmpty(searchText) || song.Artist.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 || song.Title.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                        && (String.IsNullOrEmpty(key) || song.Key == key)
+                        && (String.IsNullOrEmpty(playlist) || song.Playlist == playlist)
+                        && (weddingMenuItem.Checked || (!weddingMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Wedding")))
+                        && (electroHouseMenuItem.Checked || (!electroHouseMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Electro house")))
+                        && (everythingElseMenuItem.Checked | (!everythingElseMenuItem.Checked && (song.FullName.Contains(@"C:\Dj Music\Wedding") || song.FullName.Contains(@"C:\Dj Music\Electro house")))))
+                        songsGridView.Rows.Add(row);
+                }
             }
-            // takes too long while debugging
+
             songsGridView.Sort(songsGridView.Columns[5], ListSortDirection.Ascending);
             songsGridView.Rows[0].Selected = true;
         }
@@ -241,6 +322,7 @@ namespace Cellekta_2
 
                 AddSongToList(new Song()
                 {
+                    Rating = Convert.ToInt32(row.Cells[COLUMN_RATING].Value),
                     Artist = row.Cells[COLUMN_ARTIST].Value.ToString(),
                     Title = row.Cells[COLUMN_TITLE].Value.ToString(),
                     LeadingBpm = leadingBpm,
@@ -253,7 +335,7 @@ namespace Cellekta_2
 
         private void AddSongToList(ISong song)
         {
-            string[] row = new string[] { song.Artist, song.Title, song.LeadingBpm.ToString(), song.Key, song.Playlist };
+            string[] row = new string[] { song.Rating.ToString(), song.Artist, song.Title, song.LeadingBpm.ToString(), song.Key, song.Playlist };
 
             if (isReplacing)
             {
