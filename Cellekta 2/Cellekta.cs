@@ -157,7 +157,9 @@ namespace Cellekta_2
             var keyList = library.GetKeys();
 
             foreach (string item in keyList)
+            {
                 keyComboBox.Items.Add(item);
+            }
         }
 
         private void PopulateBpmList()

@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace TraktorLibrary
 {
     public class Library : ILibrary
     {
-        string _traktorLibraryPath;
-        string _tempLibraryPath;
-        List<ISong> _music;
+        private string _traktorLibraryPath;
+        private string _tempLibraryPath;
+        private List<ISong> _music;
 
         public Library(List<ISong> music)
         {
@@ -55,20 +53,20 @@ namespace TraktorLibrary
         public void CreateTemp()
         {
             var tempPath = Path.GetTempPath();
-            var dir = System.IO.Path.GetDirectoryName(_traktorLibraryPath);
+            var dir = Path.GetDirectoryName(_traktorLibraryPath);
 
             string[] directories = _traktorLibraryPath.Split(new char[] { '\\', '\\' }, StringSplitOptions.RemoveEmptyEntries);
             var directoriesCount = directories.Length;
 
             var name = directories[directoriesCount - 1];
 
-            var sourceFile = System.IO.Path.Combine(dir, name);
-            _tempLibraryPath = System.IO.Path.Combine(tempPath, name);
+            var sourceFile = Path.Combine(dir, name);
+            _tempLibraryPath = Path.Combine(tempPath, name);
 
-            if (!System.IO.Directory.Exists(tempPath))
-                System.IO.Directory.CreateDirectory(tempPath);
+            if (!Directory.Exists(tempPath))
+                Directory.CreateDirectory(tempPath);
 
-            System.IO.File.Copy(sourceFile, _tempLibraryPath, true);
+            File.Copy(sourceFile, _tempLibraryPath, true);
 
             return;
         }
@@ -95,8 +93,7 @@ namespace TraktorLibrary
         {
             if (_music == null)
                 _music = new List<ISong>();
-
-
+            
             XmlDocument doc = new XmlDocument();
             try { doc.Load(_tempLibraryPath); }
             catch (Exception ex) { }
@@ -110,7 +107,9 @@ namespace TraktorLibrary
                     song.Populate(entryNode);
                     song.GetRating();
 
-                    if (song.Artist != "Loopmasters" && song.Artist != "Native Instruments" && song.Artist != "Subb-an")
+                    if (song.Artist != "Loopmasters" 
+                        && song.Artist != "Native Instruments" 
+                        && song.Artist != "Subb-an")
                         _music.Add(song);
                 }
             }
@@ -118,7 +117,7 @@ namespace TraktorLibrary
 
         private static string ReadSetting(string key)
         {
-            string result = string.Empty;
+            var result = string.Empty;
 
             try
             {
@@ -318,7 +317,7 @@ namespace TraktorLibrary
         public static int ImportBpm(XmlAttribute xmlAttributes)
         {
             decimal bpm = 0;
-            Decimal.TryParse(ImportAttribute(xmlAttributes), out bpm);
+            decimal.TryParse(ImportAttribute(xmlAttributes), out bpm);
 
             return (int)Math.Round(bpm, 0);
         }
@@ -328,7 +327,7 @@ namespace TraktorLibrary
             var musicalKey = 0;
             var key = string.Empty;
 
-            Int32.TryParse(ImportAttribute(xmlAttributes), out musicalKey);
+            int.TryParse(ImportAttribute(xmlAttributes), out musicalKey);
             traktorKeys.TryGetValue(musicalKey, out key);
 
             return key;
@@ -337,20 +336,20 @@ namespace TraktorLibrary
         public static string CreateTempCollection(string fileName)
         {
             var tempPath = Path.GetTempPath();
-            var dir = System.IO.Path.GetDirectoryName(fileName);
+            var dir = Path.GetDirectoryName(fileName);
 
             string[] directories = fileName.Split(new char[] { '\\', '\\' }, StringSplitOptions.RemoveEmptyEntries);
             var directoriesCount = directories.Length;
 
             var name = directories[directoriesCount - 1];
 
-            var sourceFile = System.IO.Path.Combine(dir, name);
-            var destFile = System.IO.Path.Combine(tempPath, name);
+            var sourceFile = Path.Combine(dir, name);
+            var destFile = Path.Combine(tempPath, name);
 
-            if (!System.IO.Directory.Exists(tempPath))
-                System.IO.Directory.CreateDirectory(tempPath);
+            if (!Directory.Exists(tempPath))
+                Directory.CreateDirectory(tempPath);
 
-            System.IO.File.Copy(sourceFile, destFile, true);
+            File.Copy(sourceFile, destFile, true);
 
             return destFile;
         }
@@ -358,83 +357,11 @@ namespace TraktorLibrary
         public static bool DeleteTempCollection()
         {
             var tempPath = Path.GetTempPath();
-            var tempCollection = String.Concat(tempPath, "collection.nml");
+            var tempCollection = string.Concat(tempPath, "collection.nml");
 
             File.Delete(tempCollection);
 
             return !File.Exists(tempCollection);
-        }
-
-        public static Song ImportSong(XmlNode xmlNode)
-        {
-            var artist = string.Empty;
-            var title = string.Empty;
-            var fullName = string.Empty;
-            var playTime = 0;
-            var key = string.Empty;
-            var leadingBpm = 0;
-            var trailingBpm = 0;
-            var playlist = string.Empty;
-
-            if (xmlNode != null)
-            {
-                artist = ImportAttribute(xmlNode.Attributes["ARTIST"]);
-                title = ImportAttribute(xmlNode.Attributes["TITLE"]);
-
-                XmlNode locationNode = xmlNode.SelectSingleNode("LOCATION");
-
-                var file = string.Empty;
-
-                if (locationNode != null)
-                {
-                    var dir = ImportAttribute(locationNode.Attributes["DIR"]).Replace("/:", "\\");
-                    playlist = GetPlaylist(dir);
-                    file = ImportAttribute(locationNode.Attributes["FILE"]);
-                    var volume = ImportAttribute(locationNode.Attributes["VOLUME"]);
-                    fullName = string.Concat(volume, dir, file);
-                }
-
-                XmlNode infoNode = xmlNode.SelectSingleNode("INFO");
-
-                if (infoNode != null)
-                    Int32.TryParse(ImportAttribute(infoNode.Attributes["PLAYTIME"]), out playTime);
-
-                if (fullName.Contains(@"C:\Dj Music\Tranny")
-                    || fullName.Contains(@"C:\Dj Music\Selections\S_Tranny"))
-                {
-                    var tagTitle = Song.GetTagTitle(fullName);
-                    var tagArtist = Song.GetTagArtist(fullName);
-                    leadingBpm = Song.GetLeadingBpm(tagTitle);
-                    trailingBpm = Song.GetTrailingBpm(tagArtist);
-                }
-
-                if (leadingBpm == 0)
-                {
-                    XmlNode tempoNode = xmlNode.SelectSingleNode("TEMPO");
-
-                    if (tempoNode != null)
-                        leadingBpm = ImportBpm(tempoNode.Attributes["BPM"]);
-                }
-
-                XmlNode musicalKeyNode = xmlNode.SelectSingleNode("MUSICAL_KEY");
-
-                if (musicalKeyNode != null)
-                {
-                    key = ImportKey(musicalKeyNode.Attributes["VALUE"]);
-                }
-            }
-
-            return new Song
-            {
-                Artist = artist,
-                Title = title,
-                FullName = fullName,
-                PlayTime = playTime,
-                Key = key,
-                LeadingBpm = leadingBpm,
-                TrailingBpm = trailingBpm,
-                Playlist = playlist,
-            };
         }
     }
 }

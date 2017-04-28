@@ -1,123 +1,234 @@
 ﻿using Ratings;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace TraktorLibrary
 {
     public class Song : ISong
     {
-        string _artist;
-        string _title;
-        string _playlist;
-        string _fullName;
-        int _playTime;
-        int _leadingBpm;
-        int _trailingBpm;
-        string _key;
-        int _rating;
-        List<String> _ratedArtists = new List<string>();
+        private List<string> ratedArtists;
+        private Dictionary<int, string> traktorKeys;
 
-        Dictionary<int, string> _traktorKeys = new Dictionary<int, string>()
-        {
-            { 0, "1d" },
-            { 1, "8d" },
-            { 2, "3d" },
-            { 3, "10d" },
-            { 4, "5d" },
-            { 5, "12d" },
-            { 6, "7d" },
-            { 7, "2d" },
-            { 8, "9d" },
-            { 9, "4d" },
-            { 10, "11d" },
-            { 11, "6d" },
-            { 12, "10m" },
-            { 13, "5m" },
-            { 14, "12m" },
-            { 15, "7m" },
-            { 16, "2m" },
-            { 17, "9m" },
-            { 18, "4m" },
-            { 19, "11m" },
-            { 20, "6m" },
-            { 21, "1m" },
-            { 22, "8m" },
-            { 23, "3m" }
-        };
-
-        public string Artist { get { return _artist; } set { _artist = value; } }
-        public string Title { get { return _title; } set { _title = value; } }
-        public string Playlist { get { return _playlist; } set { _playlist = value; } }
-        public string FullName { get { return _fullName; } set { _fullName = value; } }
-        public int LeadingBpm { get { return _leadingBpm; } set { _leadingBpm = value; } }
-        public string Key { get { return _key; } set { _key = value; } }
-        public int PlayTime { get { return _playTime; } set { _playTime = value; } }
-        public int TrailingBpm { get { return _trailingBpm; } set { _trailingBpm = value; } }
-        public int Rating { get { return _rating; } set { _rating = value; } }
+        public string Artist { get; set; }
+        public string Title { get; set; }
+        public string Playlist { get; set; }
+        public string FullName { get; set; }
+        public int LeadingBpm { get; set; }
+        public string Key { get; set; }
+        public int PlayTime { get; set; }
+        public int TrailingBpm { get; set; }
+        public int Rating { get; set; }
 
         public Song()
         {
+            ratedArtists = new List<string>();
+            traktorKeys = new Dictionary<int, string>()
+            {
+                { 0, "1d" },
+                { 1, "8d" },
+                { 2, "3d" },
+                { 3, "10d" },
+                { 4, "5d" },
+                { 5, "12d" },
+                { 6, "7d" },
+                { 7, "2d" },
+                { 8, "9d" },
+                { 9, "4d" },
+                { 10, "11d" },
+                { 11, "6d" },
+                { 12, "10m" },
+                { 13, "5m" },
+                { 14, "12m" },
+                { 15, "7m" },
+                { 16, "2m" },
+                { 17, "9m" },
+                { 18, "4m" },
+                { 19, "11m" },
+                { 20, "6m" },
+                { 21, "1m" },
+                { 22, "8m" },
+                { 23, "3m" }
+            };
+        }
+
+        public string GetPlayList(XmlNode locationNode)
+        {
+            if (locationNode == null) throw new ArgumentNullException("locationNode is null");
+
+            var directory = GetDirectory(locationNode);
+            var directories = directory.Split(new char[] { '\\', '\\' }, StringSplitOptions.RemoveEmptyEntries);
+            var directoriesCount = directories.Length;
+
+            return directories[directoriesCount - 1];
+        }
+
+        public static string GetDirectory(XmlNode locationNode)
+        {
+            if (locationNode == null) throw new ArgumentNullException("locationNode is null");
+
+            return GetAttribute(locationNode.Attributes["DIR"]).Replace("/:", "\\");
+        }
+
+        public string GetFullName(XmlNode locationNode)
+        {
+            if (locationNode == null) throw new ArgumentNullException("locationNode is null");
+
+            var directory = GetDirectory(locationNode);
+            var file = GetAttribute(locationNode.Attributes["FILE"]);
+            var volume = GetAttribute(locationNode.Attributes["VOLUME"]);
+
+            return string.Concat(volume, directory, file);
         }
 
         public void Populate(XmlNode xmlNode)
         {
-            if (xmlNode != null)
+            if (xmlNode == null) throw new ArgumentNullException("xmlNode is null");
+
+            Artist = GetAttribute(xmlNode.Attributes["ARTIST"]);
+            Title = GetAttribute(xmlNode.Attributes["TITLE"]);
+            var locationNode = xmlNode.SelectSingleNode("LOCATION");
+            Playlist = GetPlayList(locationNode);
+            FullName = GetFullName(locationNode);
+            PlayTime = GetPlayTime(xmlNode.SelectSingleNode("INFO"));
+
+            try
             {
-                var file = string.Empty;
-
-                _artist = GetAttribute(xmlNode.Attributes["ARTIST"]);
-                _title = GetAttribute(xmlNode.Attributes["TITLE"]);
-
-                var locationNode = xmlNode.SelectSingleNode("LOCATION");
-
-                if (locationNode != null)
-                {
-                    var dir = GetAttribute(locationNode.Attributes["DIR"]).Replace("/:", "\\");
-                    _playlist = GetPlaylist(dir);
-                    file = GetAttribute(locationNode.Attributes["FILE"]);
-                    var volume = GetAttribute(locationNode.Attributes["VOLUME"]);
-                    _fullName = string.Concat(volume, dir, file);
-                }
-
-                var infoNode = xmlNode.SelectSingleNode("INFO");
-
-                if (infoNode != null)
-                    Int32.TryParse(GetAttribute(infoNode.Attributes["PLAYTIME"]), out _playTime);
-
-                if (_fullName.Contains(@"C:\Dj Music\Tranny")
-                    || _fullName.Contains(@"C:\Dj Music\Selections\S_Tranny"))
-                {
-                    ITag tag = new Tag(_fullName);
-                    var tagTitle = tag.Title;
-                    var tagArtist = tag.Artist;
-                    _leadingBpm = GetLeadingBpm(tagTitle);
-                    _trailingBpm = GetTrailingBpm(tagArtist);
-                }
-
-                if (_leadingBpm == 0)
-                {
-                    var tempoNode = xmlNode.SelectSingleNode("TEMPO");
-
-                    if (tempoNode != null)
-                        _leadingBpm = GetBpm(tempoNode.Attributes["BPM"]);
-                }
-
-                var musicalKeyNode = xmlNode.SelectSingleNode("MUSICAL_KEY");
-
-                if (musicalKeyNode != null)
-                {
-                    var musicalKey = GetKey(musicalKeyNode.Attributes["VALUE"]);
-                    _traktorKeys.TryGetValue(musicalKey, out _key);
-                }
+                LeadingBpm = GetLeadingBpm(xmlNode.SelectSingleNode("TEMPO"), FullName);
             }
+            catch (ArgumentNullException)
+            {
+                LeadingBpm = 0;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            TrailingBpm = GetTrailingBpm(FullName);
+
+            try
+            {
+                Key = GetKey(xmlNode.SelectSingleNode("MUSICAL_KEY"));
+            }
+            catch (ArgumentNullException)
+            {
+                Key = string.Empty;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
         }
 
-        private static string GetPlaylist(string dir)
+        private string GetKey(XmlNode musicalKeyNode)
+        {
+            if (musicalKeyNode == null) throw new ArgumentNullException("musicalKeyNode is null");
+
+            var key = string.Empty;
+            var musicalKey = GetKeyValue(musicalKeyNode.Attributes["VALUE"]);
+            traktorKeys.TryGetValue(musicalKey, out key);
+
+            return key;
+        }
+
+        public static int GetKeyValue(XmlAttribute musicalKeyAttribute)
+        {
+            if (musicalKeyAttribute == null) throw new ArgumentNullException("musicalKeyAttribute is null");
+
+            var musicalKey = 0;
+            var key = string.Empty;
+
+            int.TryParse(GetAttribute(musicalKeyAttribute), out musicalKey);
+
+            return musicalKey;
+        }
+
+        public int GetTrailingBpm(string fullName)
+        {
+            if (string.IsNullOrEmpty(fullName)) throw new ArgumentNullException("fullName is null or empty");
+
+            var trailingBpm = 0;
+
+            if (IsTransitionPlaylist(fullName))
+            {
+                var tag = new Tag(fullName);
+
+                try
+                {
+                    trailingBpm = tag.GetBpm(tag.Artist);
+                }
+                catch (ArgumentNullException)
+                {
+                    trailingBpm = 0;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            return trailingBpm;
+        }
+
+        public bool IsTransitionPlaylist(string fullName)
+        {
+            if (string.IsNullOrEmpty(fullName)) throw new ArgumentNullException("fullName is null or empty");
+
+            return (fullName.Contains(@"C:\Dj Music\Tranny") || fullName.Contains(@"C:\Dj Music\Selections\S_Tranny"));
+        }
+
+        public int GetLeadingBpm(XmlNode tempoNode, string fullName)
+        {
+            if (tempoNode == null) throw new ArgumentNullException("tempoNode is null");
+            if (string.IsNullOrEmpty(fullName)) throw new ArgumentNullException("fullName is null or empty");
+
+            var leadingBpm = 0;
+
+            if (IsTransitionPlaylist(fullName))
+            {
+                var tag = new Tag(fullName);
+
+                try
+                {
+                    leadingBpm = tag.GetBpm(tag.Title);
+                }
+                catch (ArgumentNullException)
+                {
+                    leadingBpm = 0;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
+            if (leadingBpm == 0)
+            {
+                if (tempoNode != null)
+                {
+                    leadingBpm = GetBpm(tempoNode.Attributes["BPM"]);
+                }
+            }
+
+            return leadingBpm;
+        }
+
+        public int GetPlayTime(XmlNode infoNode)
+        {
+            if (infoNode == null) throw new ArgumentNullException("infoNode is null");
+
+            var playTime = 0;
+            int.TryParse(GetAttribute(infoNode.Attributes["PLAYTIME"]), out playTime);
+
+            return playTime;
+        }
+
+        public static string GetPlaylist(string dir)
         {
             string[] directories = dir.Split(new char[] { '\\', '\\' }, StringSplitOptions.RemoveEmptyEntries);
             var directoriesCount = directories.Length;
@@ -125,43 +236,7 @@ namespace TraktorLibrary
             return directories[directoriesCount - 1];
         }
 
-        public static int GetLeadingBpm(string tagTitle)
-        {
-            var leadingBpm = 0;
-
-            if (!string.IsNullOrEmpty(tagTitle))
-            {
-                if (!IsArtistWithLeadingNumber(tagTitle))
-                {
-                    var match = Regex.Match(tagTitle, @"^[0-9][0-9][0-9]?", RegexOptions.IgnoreCase);
-
-                    if (match.Success)
-                        leadingBpm = Convert.ToInt32(match.Value);
-                }
-            }
-
-            return leadingBpm;
-        }
-
-        public static int GetTrailingBpm(string tagArtist)
-        {
-            var trailingBpm = 0;
-
-            if (!string.IsNullOrEmpty(tagArtist))
-            {
-                if (!IsArtistWithLeadingNumber(tagArtist))
-                {
-                    Match match = Regex.Match(tagArtist, @"^[0-9][0-9][0-9]?", RegexOptions.IgnoreCase);
-
-                    if (match.Success)
-                        trailingBpm = Convert.ToInt32(match.Value);
-                }
-            }
-
-            return trailingBpm;
-        }
-
-        private static bool IsArtistWithLeadingNumber(string artistName)
+        public static bool IsArtistWithLeadingNumber(string artistName)
         {
             var isArtistName = false;
 
@@ -182,7 +257,7 @@ namespace TraktorLibrary
             return isArtistName;
         }
 
-        private static string GetAttribute(XmlAttribute xmlAttributes)
+        public static string GetAttribute(XmlAttribute xmlAttributes)
         {
             var attribute = string.Empty;
 
@@ -195,22 +270,12 @@ namespace TraktorLibrary
             return attribute;
         }
 
-        private static int GetBpm(XmlAttribute xmlAttributes)
+        public static int GetBpm(XmlAttribute xmlAttributes)
         {
             decimal bpm = 0;
-            Decimal.TryParse(GetAttribute(xmlAttributes), out bpm);
+            decimal.TryParse(GetAttribute(xmlAttributes), out bpm);
 
             return (int)Math.Round(bpm, 0);
-        }
-
-        private static int GetKey(XmlAttribute xmlAttributes)
-        {
-            var musicalKey = 0;
-            var key = string.Empty;
-
-            Int32.TryParse(GetAttribute(xmlAttributes), out musicalKey);
-
-            return musicalKey;
         }
 
         public void GetRating()
@@ -219,29 +284,29 @@ namespace TraktorLibrary
             ICharts charts = new Charts();
             charts.GetCharts();
 
-            if (charts.IsChartedSong(_artist, _title))
-                _rating += 1;
+            if (charts.IsChartedSong(Artist, Title))
+                Rating++;
 
             IRatedArtists ratedArtists = new RatedArtists();
             ratedArtists.GetRatedArtists();
 
-            if (ratedArtists.IsRatedArtist(_artist))
+            if (ratedArtists.IsRatedArtist(Artist))
             {
-                _rating += 1;
+                Rating++;
             }
 
             IRatedTitles ratedTitles = new RatedTitles();
             ratedTitles.GetRatedTitles();
 
-            if (ratedTitles.IsRatedTitle(_artist, _title))
+            if (ratedTitles.IsRatedTitle(Artist, Title))
             {
-                _rating += 1;
+                Rating++;
             }
         }
 
         private bool IsArtistRated()
         {
-            return _ratedArtists.Contains(_artist);
+            return ratedArtists.Contains(Artist);
         }
 
         public static List<int> GetBpmRange(int bpm, int bpmRangeSelector)
@@ -297,17 +362,21 @@ namespace TraktorLibrary
 
         public static string GetTagTitle(string fullName)
         {
-            TagLib.File f = TagLib.File.Create(fullName);
+            if (string.IsNullOrEmpty(fullName)) throw new ArgumentNullException("fullName is null or empty");
 
-            return f.Tag.Title;
+            TagLib.File file = TagLib.File.Create(fullName);
+
+            return file.Tag.Title;
 
         }
 
         public static string GetTagArtist(string fullName)
         {
-            TagLib.File f = TagLib.File.Create(fullName);
+            if (string.IsNullOrEmpty(fullName)) throw new ArgumentNullException("fullName is null or empty");
 
-            return f.Tag.FirstArtist;
+            TagLib.File file = TagLib.File.Create(fullName);
+
+            return file.Tag.FirstArtist;
         }
     }
 }

@@ -67,7 +67,6 @@
             this.electroHouseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.weddingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.everythingElseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.presetsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.artistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.previouslyPlayedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -333,7 +332,6 @@
             this.fileMenu,
             this.selectionMenuItem,
             this.playlistsToolStripMenuItem,
-            this.presetsToolStripMenuItem,
             this.exportToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
@@ -462,18 +460,12 @@
             this.everythingElseMenuItem.Text = "Everything else";
             this.everythingElseMenuItem.Click += new System.EventHandler(this.everythingElseMenuItem_Click);
             // 
-            // presetsToolStripMenuItem
-            // 
-            this.presetsToolStripMenuItem.Name = "presetsToolStripMenuItem";
-            this.presetsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
-            this.presetsToolStripMenuItem.Text = "Presets";
-            // 
             // exportToolStripMenuItem
             // 
             this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.currentSetToolStripMenuItem,
             this.artistsToolStripMenuItem,
-            this.previouslyPlayedToolStripMenuItem,
-            this.currentSetToolStripMenuItem});
+            this.previouslyPlayedToolStripMenuItem});
             this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
             this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.exportToolStripMenuItem.Text = "Export";
@@ -548,7 +540,6 @@
         private System.Windows.Forms.ToolStripMenuItem clearMenuItem;
         private System.Windows.Forms.Button insertButton;
         private System.Windows.Forms.ToolStripMenuItem playlistsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem presetsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem weddingMenuItem;
         private System.Windows.Forms.ToolStripMenuItem electroHouseMenuItem;
         private System.Windows.Forms.Button cancelButton;
