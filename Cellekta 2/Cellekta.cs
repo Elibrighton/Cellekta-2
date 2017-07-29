@@ -29,6 +29,7 @@ namespace Cellekta_2
         public bool isPopulating;
         public bool isRangeSelection;
         public bool isRatedSelection;
+        public string custom1Playlist;
         public static Dictionary<string, int> keyDictionary = new Dictionary<string, int> { };
         public static Dictionary<int, int> bpmDictionary = new Dictionary<int, int> { };
         int bpmRangeSelector = 3;
@@ -36,6 +37,9 @@ namespace Cellekta_2
         public Cellekta()
         {
             InitializeComponent();
+
+            custom1MenuItem.Text = "Drum and bass";
+            custom1Playlist = string.Concat(@"C:\Dj Music\", custom1MenuItem.Text);
 
             library = new Library(new List<ISong>());
 
@@ -234,7 +238,7 @@ namespace Cellekta_2
                     else
                         isAdding = false;
                 }
-
+                
                 if (isRangeSelection)
                 {
                     if (isAdding
@@ -243,7 +247,8 @@ namespace Cellekta_2
                         && (String.IsNullOrEmpty(playlist) || song.Playlist == playlist)
                         && (weddingMenuItem.Checked || (!weddingMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Wedding")))
                         && (electroHouseMenuItem.Checked || (!electroHouseMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Electro house")))
-                        && (everythingElseMenuItem.Checked | (!everythingElseMenuItem.Checked && (song.FullName.Contains(@"C:\Dj Music\Wedding") || song.FullName.Contains(@"C:\Dj Music\Electro house")))))
+                        && (custom1MenuItem.Checked || (!custom1MenuItem.Checked && !song.FullName.Contains(custom1Playlist)))
+                        && (everythingElseMenuItem.Checked | (!everythingElseMenuItem.Checked && (song.FullName.Contains(@"C:\Dj Music\Wedding") || song.FullName.Contains(@"C:\Dj Music\Electro house") || song.FullName.Contains(custom1Playlist)))))
                         songsGridView.Rows.Add(row);
                 }
                 else
@@ -254,11 +259,13 @@ namespace Cellekta_2
                         && (String.IsNullOrEmpty(playlist) || song.Playlist == playlist)
                         && (weddingMenuItem.Checked || (!weddingMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Wedding")))
                         && (electroHouseMenuItem.Checked || (!electroHouseMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Electro house")))
-                        && (everythingElseMenuItem.Checked | (!everythingElseMenuItem.Checked && (song.FullName.Contains(@"C:\Dj Music\Wedding") || song.FullName.Contains(@"C:\Dj Music\Electro house")))))
+                        && (custom1MenuItem.Checked || (!custom1MenuItem.Checked && !song.FullName.Contains(custom1Playlist)))
+                        && (everythingElseMenuItem.Checked | (!everythingElseMenuItem.Checked && (song.FullName.Contains(@"C:\Dj Music\Wedding") || song.FullName.Contains(custom1Playlist)))))
                         songsGridView.Rows.Add(row);
                 }
             }
 
+            // Comment out to speed up testing
             songsGridView.Sort(songsGridView.Columns[5], ListSortDirection.Ascending);
             songsGridView.Rows[0].Selected = true;
         }
@@ -547,14 +554,66 @@ namespace Cellekta_2
 
                     SelectRandomRow();
 
-                    // add the song
-                    GetSongSelection();
+                    if (!IsSongDuplicateInList())
+                    {
+                        // add the song
+                        GetSongSelection();
+                    }
 
                     i++;
                 }
             }
 
             SelectListRow();
+        }
+
+        private bool IsSongDuplicateInList()
+        {
+            var isSongDuplicateInList = false;
+
+            var selectedSongRow = GetSelectedSongRow();
+
+            if (selectedSongRow != null)
+            {
+                var rating = Convert.ToInt32(selectedSongRow.Cells[COLUMN_RATING].Value);
+
+                for (int i = 1; i < listGridView.Rows.Count; i++)
+                {
+                    isSongDuplicateInList = AreRowsDuplicate(selectedSongRow, listGridView.Rows[i - 1]);
+
+                    if (isSongDuplicateInList)
+                    {
+                        break;
+                    }
+                }
+
+            }
+
+            return isSongDuplicateInList;
+        }
+
+        private bool AreRowsDuplicate(DataGridViewRow selectedSongRow, DataGridViewRow listRow)
+        {
+            return (Convert.ToInt32(selectedSongRow.Cells[COLUMN_RATING].Value) == Convert.ToInt32(listRow.Cells[COLUMN_RATING].Value)
+                && selectedSongRow.Cells[COLUMN_ARTIST].Value.ToString() == listRow.Cells[COLUMN_ARTIST].Value.ToString()
+                && selectedSongRow.Cells[COLUMN_TITLE].Value.ToString() == listRow.Cells[COLUMN_TITLE].Value.ToString()
+                && selectedSongRow.Cells[COLUMN_BPM].Value.ToString() == listRow.Cells[COLUMN_BPM].Value.ToString()
+                && Convert.ToString(selectedSongRow.Cells[COLUMN_KEY].Value) == Convert.ToString(listRow.Cells[COLUMN_KEY].Value)
+                && Convert.ToString(selectedSongRow.Cells[COLUMN_PLAYLIST].Value) == Convert.ToString(listRow.Cells[COLUMN_PLAYLIST].Value));
+        }
+
+        private DataGridViewRow GetSelectedSongRow()
+        {
+            var row = new DataGridViewRow();
+
+            if (songsGridView.SelectedCells.Count > 0)
+            {
+                int rowindex = songsGridView.SelectedCells[0].RowIndex;
+
+                row = songsGridView.Rows[rowindex];
+            }
+
+            return row;
         }
 
         private void SelectListRow()
@@ -756,7 +815,7 @@ namespace Cellekta_2
                 rangeMenuItem3.Checked = true;
                 bpmRangeSelector = 3;
             }
-            
+
             rangeMenuItem6.Checked = false;
             rangeMenuItem12.Checked = false;
 
@@ -805,6 +864,16 @@ namespace Cellekta_2
                 isRatedSelection = true;
             else
                 isRatedSelection = false;
+        }
+
+        private void custom1MenuItem_Click(object sender, EventArgs e)
+        {
+            if (custom1MenuItem.Checked)
+                custom1MenuItem.Checked = false;
+            else
+                custom1MenuItem.Checked = true;
+
+            PopulateSongs();
         }
     }
 }

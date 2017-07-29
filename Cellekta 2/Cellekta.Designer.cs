@@ -66,11 +66,12 @@
             this.playlistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.electroHouseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.weddingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.custom1MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.everythingElseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.currentSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.artistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.previouslyPlayedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.currentSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.musicTabControl.SuspendLayout();
             this.listTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.listGridView)).BeginInit();
@@ -432,6 +433,7 @@
             this.playlistsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.electroHouseMenuItem,
             this.weddingMenuItem,
+            this.custom1MenuItem,
             this.everythingElseMenuItem});
             this.playlistsToolStripMenuItem.Name = "playlistsToolStripMenuItem";
             this.playlistsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -450,6 +452,13 @@
             this.weddingMenuItem.Size = new System.Drawing.Size(153, 22);
             this.weddingMenuItem.Text = "Wedding";
             this.weddingMenuItem.Click += new System.EventHandler(this.weddingMenuItem_Click);
+            // 
+            // custom1MenuItem
+            // 
+            this.custom1MenuItem.Name = "custom1MenuItem";
+            this.custom1MenuItem.Size = new System.Drawing.Size(153, 22);
+            this.custom1MenuItem.Text = "Custom1";
+            this.custom1MenuItem.Click += new System.EventHandler(this.custom1MenuItem_Click);
             // 
             // everythingElseMenuItem
             // 
@@ -470,6 +479,12 @@
             this.exportToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.exportToolStripMenuItem.Text = "Export";
             // 
+            // currentSetToolStripMenuItem
+            // 
+            this.currentSetToolStripMenuItem.Name = "currentSetToolStripMenuItem";
+            this.currentSetToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.currentSetToolStripMenuItem.Text = "Current set";
+            // 
             // artistsToolStripMenuItem
             // 
             this.artistsToolStripMenuItem.Name = "artistsToolStripMenuItem";
@@ -481,12 +496,6 @@
             this.previouslyPlayedToolStripMenuItem.Name = "previouslyPlayedToolStripMenuItem";
             this.previouslyPlayedToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.previouslyPlayedToolStripMenuItem.Text = "Previously played";
-            // 
-            // currentSetToolStripMenuItem
-            // 
-            this.currentSetToolStripMenuItem.Name = "currentSetToolStripMenuItem";
-            this.currentSetToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.currentSetToolStripMenuItem.Text = "Current set";
             // 
             // Cellekta
             // 
@@ -556,6 +565,7 @@
         private System.Windows.Forms.ToolStripMenuItem artistsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem previouslyPlayedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem currentSetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem custom1MenuItem;
     }
 }
 
