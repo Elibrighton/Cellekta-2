@@ -19,36 +19,8 @@ namespace TraktorLibrary
             _traktorLibraryPath = ReadSetting("LibraryPath");
             _tempLibraryPath = string.Concat(System.IO.Path.GetTempPath(), "collection.nml");
         }
-        
-        public List<ISong> Music { get { return _music; } }
 
-        public static Dictionary<int, string> traktorKeys = new Dictionary<int, string>()
-        {
-            { 0, "1d" },
-            { 1, "8d" },
-            { 2, "3d" },
-            { 3, "10d" },
-            { 4, "5d" },
-            { 5, "12d" },
-            { 6, "7d" },
-            { 7, "2d" },
-            { 8, "9d" },
-            { 9, "4d" },
-            { 10, "11d" },
-            { 11, "6d" },
-            { 12, "10m" },
-            { 13, "5m" },
-            { 14, "12m" },
-            { 15, "7m" },
-            { 16, "2m" },
-            { 17, "9m" },
-            { 18, "4m" },
-            { 19, "11m" },
-            { 20, "6m" },
-            { 21, "1m" },
-            { 22, "8m" },
-            { 23, "3m" }
-        };
+        public List<ISong> Music { get { return _music; } }
 
         public void CreateTemp()
         {
@@ -93,7 +65,7 @@ namespace TraktorLibrary
         {
             if (_music == null)
                 _music = new List<ISong>();
-            
+
             XmlDocument doc = new XmlDocument();
             try { doc.Load(_tempLibraryPath); }
             catch (Exception ex) { }
@@ -107,10 +79,12 @@ namespace TraktorLibrary
                     song.Populate(entryNode);
                     song.GetRating();
 
-                    if (song.Artist != "Loopmasters" 
-                        && song.Artist != "Native Instruments" 
+                    if (song.Artist != "Loopmasters"
+                        && song.Artist != "Native Instruments"
                         && song.Artist != "Subb-an")
+                    {
                         _music.Add(song);
+                    }
                 }
             }
         }
@@ -131,7 +105,7 @@ namespace TraktorLibrary
 
             return result;
         }
-        
+
         public List<string> GetPlaylists()
         {
             List<string> playlists = new List<string>();
@@ -176,11 +150,19 @@ namespace TraktorLibrary
         {
             Dictionary<string, int> keys = new Dictionary<string, int>();
 
-            var orderedMusic = _music.OrderBy(song => song.Key);
+            var orderedMusic = _music.OrderBy(song => song.LeadingKey);
 
             foreach (ISong song in orderedMusic)
             {
-                var key = song.Key;
+                var key = song.LeadingKey;
+
+                if (!string.IsNullOrEmpty(key))
+                {
+                    if (!keys.ContainsKey(key))
+                        keys.Add(key, keys.Count + 1);
+                }
+
+                key = song.TrailingKey;
 
                 if (!string.IsNullOrEmpty(key))
                 {
@@ -287,6 +269,11 @@ namespace TraktorLibrary
             Random rand = new Random(Guid.NewGuid().GetHashCode());
             int n = 0;
 
+            if (rowCount == 1)
+            {
+                rowCount++;
+            }
+
             while (n == 0)
                 n = rand.Next(rowCount);
 
@@ -320,48 +307,6 @@ namespace TraktorLibrary
             decimal.TryParse(ImportAttribute(xmlAttributes), out bpm);
 
             return (int)Math.Round(bpm, 0);
-        }
-
-        public static string ImportKey(XmlAttribute xmlAttributes)
-        {
-            var musicalKey = 0;
-            var key = string.Empty;
-
-            int.TryParse(ImportAttribute(xmlAttributes), out musicalKey);
-            traktorKeys.TryGetValue(musicalKey, out key);
-
-            return key;
-        }
-
-        public static string CreateTempCollection(string fileName)
-        {
-            var tempPath = Path.GetTempPath();
-            var dir = Path.GetDirectoryName(fileName);
-
-            string[] directories = fileName.Split(new char[] { '\\', '\\' }, StringSplitOptions.RemoveEmptyEntries);
-            var directoriesCount = directories.Length;
-
-            var name = directories[directoriesCount - 1];
-
-            var sourceFile = Path.Combine(dir, name);
-            var destFile = Path.Combine(tempPath, name);
-
-            if (!Directory.Exists(tempPath))
-                Directory.CreateDirectory(tempPath);
-
-            File.Copy(sourceFile, destFile, true);
-
-            return destFile;
-        }
-
-        public static bool DeleteTempCollection()
-        {
-            var tempPath = Path.GetTempPath();
-            var tempCollection = string.Concat(tempPath, "collection.nml");
-
-            File.Delete(tempCollection);
-
-            return !File.Exists(tempCollection);
         }
     }
 }

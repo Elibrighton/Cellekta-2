@@ -16,10 +16,12 @@ namespace TraktorLibrary
         public string Playlist { get; set; }
         public string FullName { get; set; }
         public int LeadingBpm { get; set; }
-        public string Key { get; set; }
         public int PlayTime { get; set; }
         public int TrailingBpm { get; set; }
         public int Rating { get; set; }
+        public string LeadingKey { get; set; }
+        public string TrailingKey { get; set; }
+        public int Intensity { get; set; }
 
         public Song()
         {
@@ -107,45 +109,89 @@ namespace TraktorLibrary
             }
 
             TrailingBpm = GetTrailingBpm(FullName);
+            LeadingKey = GetLeadingMixedInKey(xmlNode.SelectSingleNode("INFO"));
+            TrailingKey = GetTrailingMixedInKey(xmlNode.SelectSingleNode("INFO"));
+            Intensity = GetIntensity(xmlNode.SelectSingleNode("INFO"));
 
-            try
+            if (Intensity > 0)
             {
-                Key = GetKey(xmlNode.SelectSingleNode("MUSICAL_KEY"));
+                Intensity = Intensity;
             }
-            catch (ArgumentNullException)
-            {
-                Key = string.Empty;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-
         }
 
-        private string GetKey(XmlNode musicalKeyNode)
+        private int GetIntensity(XmlNode infoNode)
         {
-            if (musicalKeyNode == null) throw new ArgumentNullException("musicalKeyNode is null");
+            if (infoNode == null) throw new ArgumentNullException("infoNode is null");
 
-            var key = string.Empty;
-            var musicalKey = GetKeyValue(musicalKeyNode.Attributes["VALUE"]);
-            traktorKeys.TryGetValue(musicalKey, out key);
+            var comment = GetAttribute(infoNode.Attributes["COMMENT"]);
+            var intensity = 0;
 
-            return key;
+            if (!string.IsNullOrEmpty(comment))
+            {
+                var pattern = @"^\d\d?[AB](/\d\d?[AB])?\s-\sEnergy\s\d";
+
+                if (Regex.IsMatch(comment, pattern, RegexOptions.IgnoreCase))
+                {
+                    Regex regex = new Regex(@"\d$");
+                    Match match = regex.Match(comment);
+                    if (match.Success)
+                    {
+                        intensity = Convert.ToInt32(match.Value);
+                    }
+                }
+            }
+
+            return intensity;
         }
 
-        public static int GetKeyValue(XmlAttribute musicalKeyAttribute)
+        private string GetTrailingMixedInKey(XmlNode infoNode)
         {
-            if (musicalKeyAttribute == null) throw new ArgumentNullException("musicalKeyAttribute is null");
+            if (infoNode == null) throw new ArgumentNullException("infoNode is null");
 
-            var musicalKey = 0;
-            var key = string.Empty;
+            var comment = GetAttribute(infoNode.Attributes["COMMENT"]);
+            var trailingMixedInKey = string.Empty;
 
-            int.TryParse(GetAttribute(musicalKeyAttribute), out musicalKey);
+            if (!string.IsNullOrEmpty(comment))
+            {
+                var pattern = @"^\d\d?[AB]/\d\d?[AB]\s-\sEnergy\s\d";
 
-            return musicalKey;
+                if (Regex.IsMatch(comment, pattern, RegexOptions.IgnoreCase))
+                {
+                    Regex regex = new Regex(@"/\d\d?[AB]");
+                    Match match = regex.Match(comment);
+                    if (match.Success)
+                    {
+                        trailingMixedInKey = match.Value.Replace("/", "");
+                    }
+                }
+            }
+
+            return trailingMixedInKey;
+        }
+
+        private string GetLeadingMixedInKey(XmlNode infoNode)
+        {
+            if (infoNode == null) throw new ArgumentNullException("infoNode is null");
+
+            var comment = GetAttribute(infoNode.Attributes["COMMENT"]);
+            var leadingMixedInKey = string.Empty;
+
+            if (!string.IsNullOrEmpty(comment))
+            {
+                var pattern = @"^\d\d?[AB](/\d\d?[AB])?\s-\sEnergy\s\d";
+
+                if (Regex.IsMatch(comment, pattern, RegexOptions.IgnoreCase))
+                {
+                    Regex regex = new Regex(@"^\d\d?[AB]");
+                    Match match = regex.Match(comment);
+                    if (match.Success)
+                    {
+                        leadingMixedInKey = match.Value;
+                    }
+                }
+            }
+
+            return leadingMixedInKey;
         }
 
         public int GetTrailingBpm(string fullName)
@@ -228,14 +274,6 @@ namespace TraktorLibrary
             return playTime;
         }
 
-        public static string GetPlaylist(string dir)
-        {
-            string[] directories = dir.Split(new char[] { '\\', '\\' }, StringSplitOptions.RemoveEmptyEntries);
-            var directoriesCount = directories.Length;
-
-            return directories[directoriesCount - 1];
-        }
-
         public static bool IsArtistWithLeadingNumber(string artistName)
         {
             var isArtistName = false;
@@ -304,11 +342,6 @@ namespace TraktorLibrary
             }
         }
 
-        private bool IsArtistRated()
-        {
-            return ratedArtists.Contains(Artist);
-        }
-
         public static List<int> GetBpmRange(int bpm, int bpmRangeSelector)
         {
             var bpmRange = new List<int>();
@@ -337,11 +370,11 @@ namespace TraktorLibrary
 
             if (key != string.Empty)
             {
-                key = key.ToLower();
+                key = key.ToUpper();
                 // write a method to valide the key string
-                var keyLetter = key.Contains("d") ? "d" : "m";
+                var keyLetter = key.Contains("A") ? "A" : "B";
 
-                var keyNumber = Convert.ToInt32(key.Replace("d", "").Replace("m", ""));
+                var keyNumber = Convert.ToInt32(key.Replace("A", "").Replace("B", ""));
 
                 var upperKeyNumber = keyNumber == 12 ? 1 : keyNumber + 1;
                 var lowerKeyNumber = keyNumber == 1 ? 12 : keyNumber - 1;
@@ -349,7 +382,7 @@ namespace TraktorLibrary
                 var upperKey = String.Concat(upperKeyNumber, keyLetter);
                 var lowerKey = String.Concat(lowerKeyNumber, keyLetter);
 
-                var otherKey = String.Concat(keyNumber, keyLetter == "d" ? "m" : "d");
+                var otherKey = String.Concat(keyNumber, keyLetter == "A" ? "B" : "A");
 
                 keyRange.Add(upperKey);
                 keyRange.Add(key);
@@ -358,25 +391,6 @@ namespace TraktorLibrary
             }
 
             return keyRange;
-        }
-
-        public static string GetTagTitle(string fullName)
-        {
-            if (string.IsNullOrEmpty(fullName)) throw new ArgumentNullException("fullName is null or empty");
-
-            TagLib.File file = TagLib.File.Create(fullName);
-
-            return file.Tag.Title;
-
-        }
-
-        public static string GetTagArtist(string fullName)
-        {
-            if (string.IsNullOrEmpty(fullName)) throw new ArgumentNullException("fullName is null or empty");
-
-            TagLib.File file = TagLib.File.Create(fullName);
-
-            return file.Tag.FirstArtist;
         }
     }
 }

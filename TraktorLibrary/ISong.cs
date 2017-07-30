@@ -16,7 +16,9 @@ namespace TraktorLibrary
         int PlayTime { get; }
         int LeadingBpm { get; }
         int TrailingBpm { get; }
-        string Key { get; }
+        string LeadingKey { get; }
+        string TrailingKey { get; }
+        int Intensity { get; }
         void Populate(XmlNode xmlNode);
         void GetRating();
         int Rating { get; set; }
