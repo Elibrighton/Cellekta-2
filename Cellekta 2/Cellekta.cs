@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TraktorLibrary;
 
@@ -23,17 +17,17 @@ namespace Cellekta_2
         const int COLUMN_INTENSITY = 5;
         const int COLUMN_PLAYLIST = 6;
 
-        private ILibrary library;
-        public bool isInserting { get; set; }
-        public int listRowInsertIndex { get; set; }
-        public int listRowReplaceIndex { get; set; }
-        public bool isReplacing { get; set; }
-        public bool isPopulating;
-        public bool isRangeSelection;
-        public bool isRatedSelection;
-        public string custom1Playlist;
-        public static Dictionary<string, int> keyDictionary = new Dictionary<string, int> { };
-        public static Dictionary<int, int> bpmDictionary = new Dictionary<int, int> { };
+        ILibrary library;
+        bool isInserting;
+        int listRowInsertIndex;
+        int listRowReplaceIndex;
+        bool isReplacing;
+        bool isPopulating;
+        bool isRangeSelection;
+        bool isRatedSelection;
+        string custom1Playlist;
+        static Dictionary<string, int> keyDictionary = new Dictionary<string, int> { };
+        static Dictionary<int, int> bpmDictionary = new Dictionary<int, int> { };
         int bpmRangeSelector = 3;
 
         public Cellekta()
@@ -118,17 +112,9 @@ namespace Cellekta_2
             }
         }
 
-        public void PopulateSongs()
+        public int GetSelectedBpm()
         {
             var bpm = 0;
-            var key = string.Empty;
-            var playlist = string.Empty;
-            var searchText = searchTextBox.Text;
-            var bpmRange = new List<int>();
-            var keyRange = new List<string>();
-
-            ClearMusic();
-            AddHeadings();
 
             if (bpmComboBox.SelectedItem != null)
             {
@@ -136,80 +122,179 @@ namespace Cellekta_2
                     bpm = Convert.ToInt32(bpmComboBox.SelectedItem);
             }
 
+            return bpm;
+        }
+
+        public string GetSelectedKey()
+        {
+            var key = string.Empty;
+
             if (keyComboBox.SelectedItem != null)
+            {
                 key = keyComboBox.SelectedItem.ToString();
+            }
+
+            return key;
+        }
+
+        public string GetSelectedPlaylist()
+        {
+            var playlist = string.Empty;
 
             if (playlistComboBox.SelectedItem != null)
+            {
                 playlist = playlistComboBox.SelectedItem.ToString();
+            }
+
+            return playlist;
+        }
+
+        public List<int> GetBpmRange(int bpm)
+        {
+            var bpmRange = new List<int>();
 
             if (isRangeSelection)
             {
                 bpmRange = Song.GetBpmRange(bpm, bpmRangeSelector);
-
-                if (!string.IsNullOrEmpty(key))
-                    keyRange = Song.GetKeyRange(key);
             }
+
+            return bpmRange;
+        }
+
+        public List<string> GetKeyRange(string key)
+        {
+            var keyRange = new List<string>();
+
+            if (isRangeSelection)
+            {
+                if (!string.IsNullOrEmpty(key))
+                {
+                    keyRange = Song.GetKeyRange(key);
+                }
+            }
+
+            return keyRange;
+        }
+
+        public string GetTrannyBpm(ISong song)
+        {
+            var trannyBpm = string.Empty;
+
+            if (song.TrailingBpm > 0)
+            {
+                trannyBpm = string.Format("{0} - {1}", song.LeadingBpm, song.TrailingBpm);
+            }
+            else
+            {
+                trannyBpm = song.LeadingBpm.ToString();
+            }
+
+            return trannyBpm;
+        }
+
+        public bool IsAddingRow(int bpm, List<int> bpmRange, ISong song)
+        {
+            var isAddingRow = false;
+
+            if (isRangeSelection)
+                isAddingRow = (bpm == 0 || bpmRange.Contains(song.LeadingBpm));
+            else
+                isAddingRow = (bpm == 0 || song.LeadingBpm == bpm);
+
+            if (isAddingRow)
+            {
+                if (!isRatedSelection)
+                    isAddingRow = true;
+                else if (isRatedSelection && song.Rating > 0)
+                    isAddingRow = true;
+                else
+                    isAddingRow = false;
+            }
+
+            return isAddingRow;
+        }
+
+        public string[] CreateRowFromSong(ISong song)
+        {
+            return new string[]
+            {
+                    song.Rating.ToString(),
+                    song.Artist,
+                    song.Title,
+                    GetTrannyBpm(song),
+                    string.Concat(song.LeadingKey, !string.IsNullOrEmpty(song.TrailingKey) ? string.Concat("/", song.TrailingKey) : ""),
+                    song.Intensity.ToString(),
+                    song.Playlist
+            };
+        }
+
+        public bool IsKeyCriteriaMet(string key, List<string> keyRange, string leadingKey)
+        {
+            var isKeyCriteriaMet = false;
+
+            if (isRangeSelection)
+            {
+                if (string.IsNullOrEmpty(key) || keyRange.Contains(leadingKey))
+                {
+                    isKeyCriteriaMet = true;
+                }
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(key) || leadingKey == key)
+                {
+                    isKeyCriteriaMet = true;
+                }
+            }
+
+            return isKeyCriteriaMet;
+        }
+
+        public bool IsSearchCriteriaMet(string searchText, int bpm, string key, string playlist, List<int> bpmRange, List<string> keyRange, ISong song)
+        {
+            var isSearchCriteriaMet = false;
+
+            if (IsAddingRow(bpm, bpmRange, song))
+            {
+                if ((string.IsNullOrEmpty(searchText) || song.Artist.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 || song.Title.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
+                    && (string.IsNullOrEmpty(key) || keyRange.Contains(song.LeadingKey))
+                    && (string.IsNullOrEmpty(playlist) || song.Playlist == playlist)
+                    && (weddingMenuItem.Checked || (!weddingMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Wedding")))
+                    && (electroHouseMenuItem.Checked || (!electroHouseMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Electro house")))
+                    && (custom1MenuItem.Checked || (!custom1MenuItem.Checked && !song.FullName.Contains(custom1Playlist)))
+                    && (everythingElseMenuItem.Checked | (!everythingElseMenuItem.Checked && (song.FullName.Contains(@"C:\Dj Music\Wedding") || song.FullName.Contains(@"C:\Dj Music\Electro house") || song.FullName.Contains(custom1Playlist)))))
+                {
+                    if (IsKeyCriteriaMet(key, keyRange, song.LeadingKey))
+                    {
+                        isSearchCriteriaMet = true;
+                    }
+                }
+            }
+
+            return isSearchCriteriaMet;
+        }
+
+        public void PopulateSongs()
+        {
+            ClearMusic();
+            AddHeadings();
+
+            var bpm = GetSelectedBpm();
+            var key = GetSelectedKey();
+            var playlist = GetSelectedPlaylist();
+            var bpmRange = GetBpmRange(bpm);
+            var keyRange = GetKeyRange(key);
 
             foreach (ISong song in library.Music)
             {
-                if (!string.IsNullOrEmpty(song.LeadingKey) && song.LeadingKey == "10A" && song.Playlist != "Drum and bass" && song.LeadingBpm == 126) 
+                if (IsSearchCriteriaMet(searchTextBox.Text, bpm, key, playlist, bpmRange, keyRange, song))
                 {
-                    var leadingMixedInKey = song.LeadingKey;
-                }
-                var trannyBpm = string.Empty;
-
-                if (song.TrailingBpm > 0)
-                    trannyBpm = string.Format("{0} - {1}", song.LeadingBpm, song.TrailingBpm);
-                else
-                    trannyBpm = song.LeadingBpm.ToString();
-
-                string[] row = new string[] { song.Rating.ToString(), song.Artist, song.Title, trannyBpm, string.Concat(song.LeadingKey, !string.IsNullOrEmpty(song.TrailingKey) ? string.Concat("/", song.TrailingKey) : ""), song.Intensity.ToString(), song.Playlist };
-
-                var isAdding = false;
-
-                if (isRangeSelection)
-                    isAdding = (bpm == 0 || bpmRange.Contains(song.LeadingBpm));
-                else
-                    isAdding = (bpm == 0 || song.LeadingBpm == bpm);
-
-                if (isAdding)
-                {
-                    if (!isRatedSelection)
-                        isAdding = true;
-                    else if (isRatedSelection && song.Rating > 0)
-                        isAdding = true;
-                    else
-                        isAdding = false;
-                }
-                
-                if (isRangeSelection)
-                {
-                    if (isAdding
-                        && (string.IsNullOrEmpty(searchText) || song.Artist.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 || song.Title.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
-                        && (string.IsNullOrEmpty(key) || keyRange.Contains(song.LeadingKey))
-                        && (string.IsNullOrEmpty(playlist) || song.Playlist == playlist)
-                        && (weddingMenuItem.Checked || (!weddingMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Wedding")))
-                        && (electroHouseMenuItem.Checked || (!electroHouseMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Electro house")))
-                        && (custom1MenuItem.Checked || (!custom1MenuItem.Checked && !song.FullName.Contains(custom1Playlist)))
-                        && (everythingElseMenuItem.Checked | (!everythingElseMenuItem.Checked && (song.FullName.Contains(@"C:\Dj Music\Wedding") || song.FullName.Contains(@"C:\Dj Music\Electro house") || song.FullName.Contains(custom1Playlist)))))
-                        songsGridView.Rows.Add(row);
-                }
-                else
-                {
-                    if (isAdding
-                        && (string.IsNullOrEmpty(searchText) || song.Artist.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0 || song.Title.IndexOf(searchText, StringComparison.OrdinalIgnoreCase) >= 0)
-                        && (string.IsNullOrEmpty(key) || song.LeadingKey == key)
-                        && (string.IsNullOrEmpty(playlist) || song.Playlist == playlist)
-                        && (weddingMenuItem.Checked || (!weddingMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Wedding")))
-                        && (electroHouseMenuItem.Checked || (!electroHouseMenuItem.Checked && !song.FullName.Contains(@"C:\Dj Music\Electro house")))
-                        && (custom1MenuItem.Checked || (!custom1MenuItem.Checked && !song.FullName.Contains(custom1Playlist)))
-                        && (everythingElseMenuItem.Checked | (!everythingElseMenuItem.Checked && (song.FullName.Contains(@"C:\Dj Music\Wedding") || song.FullName.Contains(custom1Playlist)))))
-                        songsGridView.Rows.Add(row);
+                    var row = CreateRowFromSong(song);
+                    songsGridView.Rows.Add(row);
                 }
             }
 
-            // Comment out to speed up testing
-            songsGridView.Sort(songsGridView.Columns[5], ListSortDirection.Ascending);
+            songsGridView.Sort(songsGridView.Columns[COLUMN_PLAYLIST], ListSortDirection.Ascending); // Comment out while debuggin to improve performance
             songsGridView.Rows[0].Selected = true;
         }
 
@@ -275,8 +360,8 @@ namespace Cellekta_2
                 }
 
                 var keyColumnValue = Convert.ToString(row.Cells[COLUMN_KEY].Value);
-                var leadingMixedInKey = GetLeadingMixedInKey(keyColumnValue);
-                var trailingMixedInKey = GetTrailingMixedInKey(keyColumnValue);
+                var leadingKey = GetLeadingKey(keyColumnValue);
+                var trailingKey = GetTrailingKey(keyColumnValue);
 
                 AddSongToList(new Song()
                 {
@@ -285,17 +370,17 @@ namespace Cellekta_2
                     Title = row.Cells[COLUMN_TITLE].Value.ToString(),
                     LeadingBpm = leadingBpm,
                     TrailingBpm = trailingBpm,
-                    LeadingKey = leadingMixedInKey,
-                    TrailingKey = trailingMixedInKey,
+                    LeadingKey = leadingKey,
+                    TrailingKey = trailingKey,
                     Intensity = Convert.ToInt32(row.Cells[COLUMN_INTENSITY].Value),
                     Playlist = Convert.ToString(row.Cells[COLUMN_PLAYLIST].Value)
                 });
             }
         }
 
-        private string GetTrailingMixedInKey(string keyColumnValue)
+        private string GetTrailingKey(string keyColumnValue)
         {
-            var trailingMixedInKey = string.Empty;
+            var trailingKey = string.Empty;
 
             if (!string.IsNullOrEmpty(keyColumnValue))
             {
@@ -308,17 +393,17 @@ namespace Cellekta_2
 
                     if (match.Success)
                     {
-                        trailingMixedInKey = match.Value;
+                        trailingKey = match.Value;
                     }
                 }
             }
 
-            return trailingMixedInKey;
+            return trailingKey;
         }
 
-        private string GetLeadingMixedInKey(string keyColumnValue)
+        private string GetLeadingKey(string keyColumnValue)
         {
-            var leadingMixedInKey = string.Empty;
+            var leadingKey = string.Empty;
 
             if (!string.IsNullOrEmpty(keyColumnValue))
             {
@@ -331,17 +416,26 @@ namespace Cellekta_2
 
                     if (match.Success)
                     {
-                        leadingMixedInKey = match.Value;
+                        leadingKey = match.Value;
                     }
                 }
             }
 
-            return leadingMixedInKey;
+            return leadingKey;
         }
 
         private void AddSongToList(ISong song)
         {
-            string[] row = new string[] { song.Rating.ToString(), song.Artist, song.Title, song.LeadingBpm.ToString(), string.Concat(song.LeadingKey, !string.IsNullOrEmpty(song.TrailingKey) ? string.Concat("/", song.TrailingKey) : ""), song.Intensity.ToString(), song.Playlist };
+            var row = new string[] {
+                song.Rating.ToString(),
+                song.Artist,
+                song.Title,
+                song.LeadingBpm.ToString(),
+                string.Concat(song.LeadingKey,
+                !string.IsNullOrEmpty(song.TrailingKey) ? string.Concat("/", song.TrailingKey) : ""),
+                song.Intensity.ToString(),
+                song.Playlist
+            };
 
             if (isReplacing)
             {
@@ -770,6 +864,11 @@ namespace Cellekta_2
 
         private void allMenuItem_Click(object sender, EventArgs e)
         {
+            ClearList();
+        }
+
+        private void ClearList()
+        {
             listGridView.Rows.Clear();
             listGridView.Refresh();
 
@@ -866,6 +965,41 @@ namespace Cellekta_2
                 custom1MenuItem.Checked = true;
 
             PopulateSongs();
+        }
+
+        private void createMenuItem_Click(object sender, EventArgs e)
+        {
+            var mixDiscWindow = new MixDiscWindow();
+            mixDiscWindow.PlaylistList = library.GetPlaylists();
+            mixDiscWindow.PopulatePlaylistList();
+            mixDiscWindow.Library = library;
+            mixDiscWindow.ShowDialog();
+
+            if (mixDiscWindow.DialogResult == DialogResult.OK)
+            {
+                var matchedMixDisc = mixDiscWindow.Matched;
+
+                if (matchedMixDisc != null && matchedMixDisc.Count > 0)
+                {
+                    ClearList();
+
+                    foreach (var song in matchedMixDisc)
+                    {
+                        var row = new string[] {
+                        song.Rating.ToString(),
+                        song.Artist,
+                        song.Title,
+                        song.LeadingBpm.ToString(),
+                        string.Concat(song.LeadingKey,
+                        !string.IsNullOrEmpty(song.TrailingKey) ? string.Concat("/", song.TrailingKey) : ""),
+                        song.Intensity.ToString(),
+                        song.Playlist
+                    };
+
+                        listGridView.Rows.Add(row);
+                    }
+                }
+            }
         }
     }
 }

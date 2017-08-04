@@ -72,6 +72,8 @@
             this.currentSetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.artistsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.previouslyPlayedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mixDiscMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.musicTabControl.SuspendLayout();
             this.listTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.listGridView)).BeginInit();
@@ -333,7 +335,8 @@
             this.fileMenu,
             this.selectionMenuItem,
             this.playlistsToolStripMenuItem,
-            this.exportToolStripMenuItem});
+            this.exportToolStripMenuItem,
+            this.mixDiscMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Size = new System.Drawing.Size(784, 24);
@@ -378,20 +381,20 @@
             this.afterMenuItem,
             this.allMenuItem});
             this.clearMenuItem.Name = "clearMenuItem";
-            this.clearMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.clearMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clearMenuItem.Text = "Clear";
             // 
             // afterMenuItem
             // 
             this.afterMenuItem.Name = "afterMenuItem";
-            this.afterMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.afterMenuItem.Size = new System.Drawing.Size(152, 22);
             this.afterMenuItem.Text = "After";
             this.afterMenuItem.Click += new System.EventHandler(this.afterMenuItem_Click);
             // 
             // allMenuItem
             // 
             this.allMenuItem.Name = "allMenuItem";
-            this.allMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.allMenuItem.Size = new System.Drawing.Size(152, 22);
             this.allMenuItem.Text = "All";
             this.allMenuItem.Click += new System.EventHandler(this.allMenuItem_Click);
             // 
@@ -402,7 +405,7 @@
             this.rangeMenuItem6,
             this.rangeMenuItem12});
             this.rangeMenuItem.Name = "rangeMenuItem";
-            this.rangeMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.rangeMenuItem.Size = new System.Drawing.Size(152, 22);
             this.rangeMenuItem.Text = "Range";
             // 
             // rangeMenuItem3
@@ -497,6 +500,21 @@
             this.previouslyPlayedToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.previouslyPlayedToolStripMenuItem.Text = "Previously played";
             // 
+            // mixDiscMenuItem
+            // 
+            this.mixDiscMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createMenuItem});
+            this.mixDiscMenuItem.Name = "mixDiscMenuItem";
+            this.mixDiscMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.mixDiscMenuItem.Text = "MixDisc";
+            // 
+            // createMenuItem
+            // 
+            this.createMenuItem.Name = "createMenuItem";
+            this.createMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.createMenuItem.Text = "Create";
+            this.createMenuItem.Click += new System.EventHandler(this.createMenuItem_Click);
+            // 
             // Cellekta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -566,6 +584,8 @@
         private System.Windows.Forms.ToolStripMenuItem previouslyPlayedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem currentSetToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem custom1MenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mixDiscMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createMenuItem;
     }
 }
 

@@ -109,8 +109,8 @@ namespace TraktorLibrary
             }
 
             TrailingBpm = GetTrailingBpm(FullName);
-            LeadingKey = GetLeadingMixedInKey(xmlNode.SelectSingleNode("INFO"));
-            TrailingKey = GetTrailingMixedInKey(xmlNode.SelectSingleNode("INFO"));
+            LeadingKey = GetLeadingKey(xmlNode.SelectSingleNode("INFO"));
+            TrailingKey = GetTrailingKey(xmlNode.SelectSingleNode("INFO"));
             Intensity = GetIntensity(xmlNode.SelectSingleNode("INFO"));
 
             if (Intensity > 0)
@@ -144,12 +144,12 @@ namespace TraktorLibrary
             return intensity;
         }
 
-        private string GetTrailingMixedInKey(XmlNode infoNode)
+        private string GetTrailingKey(XmlNode infoNode)
         {
             if (infoNode == null) throw new ArgumentNullException("infoNode is null");
 
             var comment = GetAttribute(infoNode.Attributes["COMMENT"]);
-            var trailingMixedInKey = string.Empty;
+            var trailingKey = string.Empty;
 
             if (!string.IsNullOrEmpty(comment))
             {
@@ -161,20 +161,20 @@ namespace TraktorLibrary
                     Match match = regex.Match(comment);
                     if (match.Success)
                     {
-                        trailingMixedInKey = match.Value.Replace("/", "");
+                        trailingKey = match.Value.Replace("/", "");
                     }
                 }
             }
 
-            return trailingMixedInKey;
+            return trailingKey;
         }
 
-        private string GetLeadingMixedInKey(XmlNode infoNode)
+        private string GetLeadingKey(XmlNode infoNode)
         {
             if (infoNode == null) throw new ArgumentNullException("infoNode is null");
 
             var comment = GetAttribute(infoNode.Attributes["COMMENT"]);
-            var leadingMixedInKey = string.Empty;
+            var leadingKey = string.Empty;
 
             if (!string.IsNullOrEmpty(comment))
             {
@@ -186,12 +186,12 @@ namespace TraktorLibrary
                     Match match = regex.Match(comment);
                     if (match.Success)
                     {
-                        leadingMixedInKey = match.Value;
+                        leadingKey = match.Value;
                     }
                 }
             }
 
-            return leadingMixedInKey;
+            return leadingKey;
         }
 
         public int GetTrailingBpm(string fullName)

@@ -79,11 +79,14 @@ namespace TraktorLibrary
                     song.Populate(entryNode);
                     song.GetRating();
 
-                    if (song.Artist != "Loopmasters"
-                        && song.Artist != "Native Instruments"
-                        && song.Artist != "Subb-an")
-                    {
-                        _music.Add(song);
+                    //if (song.Playlist == "Drum and bass") // remove comment for debugging
+                    //{
+                        if (song.Artist != "Loopmasters"
+                            && song.Artist != "Native Instruments"
+                            && song.Artist != "Subb-an")
+                        {
+                            _music.Add(song);
+                        //}
                     }
                 }
             }
