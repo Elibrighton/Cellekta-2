@@ -60,11 +60,161 @@ namespace Cellekta_2
 
                 if (intensityStyle == "Highest")
                 {
-                    // need to implement
+                    var highestIntensityCount = 0;
+                    var highestIntensitySongCombinations = new List<List<ISong>>();
+
+                    foreach (var songCombination in matchingSongCombinations)
+                    {
+                        var intensityCount = 0;
+
+                        foreach (var song in songCombination)
+                        {
+                            intensityCount += song.Intensity;
+                        }
+
+                        if (intensityCount == highestIntensityCount || highestIntensityCount == 0)
+                        {
+                            if (highestIntensityCount == 0)
+                            {
+                                highestIntensityCount = intensityCount;
+                            }
+
+                            highestIntensitySongCombinations.Add(songCombination);
+                        }
+                        else if (intensityCount > highestIntensityCount)
+                        {
+                            highestIntensityCount = intensityCount;
+                            highestIntensitySongCombinations = new List<List<ISong>>();
+                            highestIntensitySongCombinations.Add(songCombination);
+                        }
+                    }
+
+                    if (highestIntensitySongCombinations.Count == 1)
+                    {
+                        Matched = highestIntensitySongCombinations[0];
+                    }
+                    else
+                    {
+                        var highestTotalWeightedIntensityCount = 0;
+                        var highestTotalWeightedSongCombination = new List<List<ISong>>();
+
+                        foreach (var songCombination in highestIntensitySongCombinations)
+                        {
+                            // songs closer to the end of the list are given a higher value
+                            var totalWeightedIntensityCount = 0;
+
+                            for (int i = 0; i < songCombination.Count; i++)
+                            {
+                                var song = songCombination[i];
+                                totalWeightedIntensityCount += (i + 1) * song.Intensity;
+                            }
+
+                            if (totalWeightedIntensityCount == highestTotalWeightedIntensityCount || highestTotalWeightedIntensityCount == 0)
+                            {
+                                if (highestTotalWeightedIntensityCount == 0)
+                                {
+                                    highestTotalWeightedIntensityCount = totalWeightedIntensityCount;
+                                }
+
+                                highestTotalWeightedSongCombination.Add(songCombination);
+                            }
+                            else if (totalWeightedIntensityCount > highestTotalWeightedIntensityCount)
+                            {
+                                highestTotalWeightedIntensityCount = totalWeightedIntensityCount;
+                                highestTotalWeightedSongCombination = new List<List<ISong>>();
+                                highestTotalWeightedSongCombination.Add(songCombination);
+                            }
+                        }
+
+                        if (highestTotalWeightedSongCombination.Count == 1)
+                        {
+                            Matched = highestTotalWeightedSongCombination[0];
+                        }
+                        else
+                        {
+                            var randomMatch = TraktorLibrary.Library.GetRandomRow(highestTotalWeightedSongCombination.Count);
+                            Matched = highestTotalWeightedSongCombination[randomMatch - 1]; // do i need to -1?
+                        }
+                    }
                 }
                 else if (intensityStyle == "Lowest")
                 {
-                    // need to implement
+                    var lowestIntensityCount = 0;
+                    var lowestIntensitySongCombinations = new List<List<ISong>>();
+
+                    foreach (var songCombination in matchingSongCombinations)
+                    {
+                        var intensityCount = 0;
+
+                        foreach (var song in songCombination)
+                        {
+                            intensityCount += song.Intensity;
+                        }
+
+                        if (intensityCount == lowestIntensityCount || lowestIntensityCount == 0)
+                        {
+                            if (lowestIntensityCount == 0)
+                            {
+                                lowestIntensityCount = intensityCount;
+                            }
+
+                            lowestIntensitySongCombinations.Add(songCombination);
+                        }
+                        else if (intensityCount < lowestIntensityCount)
+                        {
+                            lowestIntensityCount = intensityCount;
+                            lowestIntensitySongCombinations = new List<List<ISong>>();
+                            lowestIntensitySongCombinations.Add(songCombination);
+                        }
+                    }
+
+                    if (lowestIntensitySongCombinations.Count == 1)
+                    {
+                        Matched = lowestIntensitySongCombinations[0];
+                    }
+                    else
+                    {
+                        var lowestTotalWeightedIntensityCount = 0;
+                        var lowestTotalWeightedSongCombination = new List<List<ISong>>();
+
+                        foreach (var songCombination in lowestIntensitySongCombinations)
+                        {
+                            // songs closer to the end of the list are given a higher value
+                            var totalWeightedIntensityCount = 0;
+
+                            for (int i = 0; i < songCombination.Count; i++)
+                            {
+                                var song = songCombination[i];
+                                totalWeightedIntensityCount += (i + 1) * song.Intensity;
+                            }
+
+                            if (totalWeightedIntensityCount == lowestTotalWeightedIntensityCount || lowestTotalWeightedIntensityCount == 0)
+                            {
+                                if (lowestTotalWeightedIntensityCount == 0)
+                                {
+                                    lowestTotalWeightedIntensityCount = totalWeightedIntensityCount;
+                                }
+
+                                lowestTotalWeightedSongCombination.Add(songCombination);
+                            }
+                            else if (totalWeightedIntensityCount > lowestTotalWeightedIntensityCount)
+                            {
+                                lowestTotalWeightedIntensityCount = totalWeightedIntensityCount;
+                                lowestTotalWeightedSongCombination = new List<List<ISong>>();
+                                lowestTotalWeightedSongCombination.Add(songCombination);
+                            }
+                        }
+
+                        if (lowestTotalWeightedSongCombination.Count == 1)
+                        {
+                            Matched = lowestTotalWeightedSongCombination[0];
+                        }
+                        else
+                        {
+                            var randomMatch = TraktorLibrary.Library.GetRandomRow(lowestTotalWeightedSongCombination.Count);
+                            Matched = lowestTotalWeightedSongCombination[randomMatch - 1]; // do i need to -1?
+                        }
+                    }
                 }
                 else
                 {
