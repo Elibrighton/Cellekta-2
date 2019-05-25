@@ -60,7 +60,7 @@ namespace Cellekta_2
 
                 if (intensityStyle == "Highest")
                 {
-                    var highestIntensityCount = 0;
+                    var highestIntensityAverage = 0.0;
                     var highestIntensitySongCombinations = new List<List<ISong>>();
 
                     foreach (var songCombination in matchingSongCombinations)
@@ -72,18 +72,20 @@ namespace Cellekta_2
                             intensityCount += song.Intensity;
                         }
 
-                        if (intensityCount == highestIntensityCount || highestIntensityCount == 0)
+                        var intensityAverage = ((double)intensityCount / songCombination.Count);
+
+                        if (intensityAverage == highestIntensityAverage || highestIntensityAverage == 0)
                         {
-                            if (highestIntensityCount == 0)
+                            if (highestIntensityAverage == 0)
                             {
-                                highestIntensityCount = intensityCount;
+                                highestIntensityAverage = intensityAverage;
                             }
 
                             highestIntensitySongCombinations.Add(songCombination);
                         }
-                        else if (intensityCount > highestIntensityCount)
+                        else if (intensityAverage > highestIntensityAverage)
                         {
-                            highestIntensityCount = intensityCount;
+                            highestIntensityAverage = intensityAverage;
                             highestIntensitySongCombinations = new List<List<ISong>>();
                             highestIntensitySongCombinations.Add(songCombination);
                         }
@@ -95,7 +97,7 @@ namespace Cellekta_2
                     }
                     else
                     {
-                        var highestTotalWeightedIntensityCount = 0;
+                        var highestTotalWeightedIntensityAverage = 0.0;
                         var highestTotalWeightedSongCombination = new List<List<ISong>>();
 
                         foreach (var songCombination in highestIntensitySongCombinations)
@@ -109,18 +111,20 @@ namespace Cellekta_2
                                 totalWeightedIntensityCount += (i + 1) * song.Intensity;
                             }
 
-                            if (totalWeightedIntensityCount == highestTotalWeightedIntensityCount || highestTotalWeightedIntensityCount == 0)
+                            var totalWeightedIntensityAverage = ((double)totalWeightedIntensityCount / songCombination.Count);
+
+                            if (totalWeightedIntensityAverage == highestTotalWeightedIntensityAverage || highestTotalWeightedIntensityAverage == 0)
                             {
-                                if (highestTotalWeightedIntensityCount == 0)
+                                if (highestTotalWeightedIntensityAverage == 0)
                                 {
-                                    highestTotalWeightedIntensityCount = totalWeightedIntensityCount;
+                                    highestTotalWeightedIntensityAverage = totalWeightedIntensityAverage;
                                 }
 
                                 highestTotalWeightedSongCombination.Add(songCombination);
                             }
-                            else if (totalWeightedIntensityCount > highestTotalWeightedIntensityCount)
+                            else if (totalWeightedIntensityAverage > highestTotalWeightedIntensityAverage)
                             {
-                                highestTotalWeightedIntensityCount = totalWeightedIntensityCount;
+                                highestTotalWeightedIntensityAverage = totalWeightedIntensityAverage;
                                 highestTotalWeightedSongCombination = new List<List<ISong>>();
                                 highestTotalWeightedSongCombination.Add(songCombination);
                             }
@@ -139,7 +143,7 @@ namespace Cellekta_2
                 }
                 else if (intensityStyle == "Lowest")
                 {
-                    var lowestIntensityCount = 0;
+                    var lowestIntensityAverage = 0.0;
                     var lowestIntensitySongCombinations = new List<List<ISong>>();
 
                     foreach (var songCombination in matchingSongCombinations)
@@ -150,19 +154,21 @@ namespace Cellekta_2
                         {
                             intensityCount += song.Intensity;
                         }
+                        
+                        var intensityAverage = ((double)intensityCount / songCombination.Count);
 
-                        if (intensityCount == lowestIntensityCount || lowestIntensityCount == 0)
+                        if (intensityAverage == lowestIntensityAverage || lowestIntensityAverage == 0)
                         {
-                            if (lowestIntensityCount == 0)
+                            if (lowestIntensityAverage == 0)
                             {
-                                lowestIntensityCount = intensityCount;
+                                lowestIntensityAverage = intensityAverage;
                             }
 
                             lowestIntensitySongCombinations.Add(songCombination);
                         }
-                        else if (intensityCount < lowestIntensityCount)
+                        else if (intensityAverage < lowestIntensityAverage)
                         {
-                            lowestIntensityCount = intensityCount;
+                            lowestIntensityAverage = intensityAverage;
                             lowestIntensitySongCombinations = new List<List<ISong>>();
                             lowestIntensitySongCombinations.Add(songCombination);
                         }
@@ -174,7 +180,7 @@ namespace Cellekta_2
                     }
                     else
                     {
-                        var lowestTotalWeightedIntensityCount = 0;
+                        var lowestTotalWeightedIntensityAverage = 0.0;
                         var lowestTotalWeightedSongCombination = new List<List<ISong>>();
 
                         foreach (var songCombination in lowestIntensitySongCombinations)
@@ -188,18 +194,20 @@ namespace Cellekta_2
                                 totalWeightedIntensityCount += (i + 1) * song.Intensity;
                             }
 
-                            if (totalWeightedIntensityCount == lowestTotalWeightedIntensityCount || lowestTotalWeightedIntensityCount == 0)
+                            var totalWeightedIntensityAverage = ((double)totalWeightedIntensityCount / songCombination.Count);
+
+                            if (totalWeightedIntensityAverage == lowestTotalWeightedIntensityAverage || lowestTotalWeightedIntensityAverage == 0)
                             {
-                                if (lowestTotalWeightedIntensityCount == 0)
+                                if (lowestTotalWeightedIntensityAverage == 0)
                                 {
-                                    lowestTotalWeightedIntensityCount = totalWeightedIntensityCount;
+                                    lowestTotalWeightedIntensityAverage = totalWeightedIntensityAverage;
                                 }
 
                                 lowestTotalWeightedSongCombination.Add(songCombination);
                             }
-                            else if (totalWeightedIntensityCount > lowestTotalWeightedIntensityCount)
+                            else if (totalWeightedIntensityAverage > lowestTotalWeightedIntensityAverage)
                             {
-                                lowestTotalWeightedIntensityCount = totalWeightedIntensityCount;
+                                lowestTotalWeightedIntensityAverage = totalWeightedIntensityAverage;
                                 lowestTotalWeightedSongCombination = new List<List<ISong>>();
                                 lowestTotalWeightedSongCombination.Add(songCombination);
                             }
